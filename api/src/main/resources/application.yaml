@@ -2,6 +2,7 @@ spring:
   jpa:
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+
   datasource:
     driverClassName: org.postgresql.Driver
     username: postgres
