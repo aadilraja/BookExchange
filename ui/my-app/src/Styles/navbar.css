@@ -1,0 +1,42 @@
+.navbar {
+   
+    padding: 1rem 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+   
+}
+
+
+.nav-link {
+    margin: 0 1rem;
+    color: #000000;
+    text-decoration: none;
+    
+}
+.icon {
+    color: #000000;
+    text-decoration: none;
+    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+
+
