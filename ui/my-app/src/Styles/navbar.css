@@ -1,42 +1,96 @@
 .navbar {
-   
-    padding: 1rem 2rem;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.navbar-container {
     display: flex;
-    flex-direction: row;
+    width: 100%;
+    padding: 1rem;
+    justify-content: space-between;
+    background-color:rgba(255, 255, 255, 0.745) ;
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     align-items: center;
-    justify-content: space-between;
-    
-
+    position: fixed;
+    top: 0;
+    z-index: 999;
 }
 
-.navbar-links {
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+.links-container {
     display: flex;
     justify-content: space-between;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-   
+    align-items: center;
+    gap: 2rem;
 }
 
-
-.nav-link {
-    margin: 0 1rem;
-    color: #000000;
-    text-decoration: none;
-    
+.text-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
 }
-.icon {
-    color: #000000;
+
+.icon-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.link {
     text-decoration: none;
+    color: #000000;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.link:hover {
+    color: #007bff;
+}
+
+.icon-links .link {
     font-size: 1.5rem;
-    width: 1.5rem;
-    height: 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
+/* Mobile menu toggle button - hidden by default on larger screens */
+.mobile-menu-toggle {
+    display: none;
+    cursor: pointer;
+}
 
-
+/* Media query for responsive design */
+@media (max-width: 768px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    .links-container {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding-top: 1rem;
+        margin-top: 1rem;
+        border-top: 1px solid #ddd;
+    }
+    
+    .links-container.mobile-active {
+        display: flex;
+    }
+    
+    .text-links, .icon-links {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
