@@ -31,24 +31,36 @@ public class BookController
         this.fileService = fileService;
     }
 
-
     @PostMapping("/book")
     public ResponseEntity<?> addBook(@RequestPart BookDTO bookdto,
                                      @RequestPart MultipartFile coverImg)
     {
         try {
-            if(bookdto==null || coverImg==null)
-                return new  ResponseEntity<>("no data recieved",HttpStatus.BAD_REQUEST);
+            if(bookdto == null)
+                return ResponseEntity.badRequest().body("Book data is missing");
+            if(coverImg == null)
+                return ResponseEntity.badRequest().body("Cover image is missing");
 
-            String filePath=fileService.saveCoverImg(coverImg);
             Book book = mapper.toBook(bookdto);
-            bookService.addBook(book,filePath);
-            return new ResponseEntity<>("Your Book added successfully!", HttpStatus.OK);
 
+            if(bookService.findIfBookExist(book.getTitle()))
+            {
+                return ResponseEntity.badRequest().body("Book already exists");
+            }
+
+
+            String filePath = fileService.saveCoverImg(coverImg);
+
+
+            bookService.addBook(book, filePath);
+
+            return ResponseEntity.ok("Book added successfully!");
         }
-        catch(Exception e)
-        {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        catch(Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error adding book: " + e.getMessage());
         }
     }
     @GetMapping("/book/{bookId}")

@@ -11,6 +11,7 @@ public class Mapper {
         Book book = new Book();
         book.setTitle(bookdto.getTitle());
         book.setAuthor(bookdto.getAuthor());
+        book.setType(bookdto.getType());
 //        book.setUser_id(bookdto.getUser_id());
         book.setGenres(bookdto.getGenres());
         return book;

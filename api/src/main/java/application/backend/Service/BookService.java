@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,17 +21,20 @@ public class BookService {
         this.bookRepo = bookRepo;
     }
 
+    public boolean findIfBookExist(String bookTitle) {
+        return bookRepo.existsByTitle(bookTitle);
+    }
 
-    public void addBook(Book book,String filePath) throws Exception {
 
+    public void addBook(Book book, String filePath) throws RuntimeException, IOException {
         try {
             book.setCoverImgPath(filePath);
             bookRepo.save(book);
-        }
-        catch(Exception e) {
-            throw new Exception("Error while adding a book in service layer"+e);
+        } catch (Exception e) {
+            throw new RuntimeException("Error while adding a book in service layer", e);
         }
     }
+
     public Book getBookById(Long bookId) throws Exception {
         try
         {

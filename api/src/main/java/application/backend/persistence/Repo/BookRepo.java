@@ -10,5 +10,6 @@ import java.util.ArrayList;
 
 @Repository
 public interface BookRepo extends CrudRepository<Book,Long> {
+    boolean existsByTitle(String title);
 
 }

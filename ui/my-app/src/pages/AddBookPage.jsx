@@ -88,30 +88,41 @@ const AddBook = () => {
 
    }
 
-   const handleSubmit=async(e)=>{
-         e.preventDefault();
+   const handleSubmit = async (e) => {
+            e.preventDefault();
 
-         const formData= new FormData();
-         formData.append("coverImg",selectedImage)
-         formData.append("bookdto",
-            new Blob([JSON.stringify(Book)],{type:"application/json"})
-         );
-         console.log(formData)
-         await axios.post("http://localhost:8080/api/book",formData, {
-                        headers: {
+            console.log(Book)
+            const formData = new FormData();
+            formData.append("coverImg", selectedImage);
+            formData.append("bookdto", 
+                new Blob([JSON.stringify(Book)], {type: "application/json"})
+            );
+            
+
+            try {
+                const response = await axios.post("http://localhost:8080/api/book", formData, {
+                    headers: {
                         "Content-Type": "multipart/form-data",
-                        },
-                    })
-                    .then((response) => {
-                        console.log("Product added successfully:", response.data);
-                        alert("Product added successfully");
-                    })
-                    .catch((error) => {
-                        console.error("Error adding product:", error);
-                        alert("Error adding product");
-                    });
-    }
-
+                    },
+                });
+                
+                console.log("Product added successfully:", response.data);
+                alert("Product added successfully");
+            } catch (error) {
+                console.error("Error adding Book:", error);
+                
+                // More detailed error handling
+                if (error.response) {
+                    
+                    alert(`Error: ${error.response.data}`);
+                } else if (error.request) {
+                   
+                    alert("No response received from server");
+                } else {
+                    alert("Error in request setup");
+                }
+            }
+}
 
     
     return (
