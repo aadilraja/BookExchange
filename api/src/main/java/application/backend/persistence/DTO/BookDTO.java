@@ -10,15 +10,17 @@ import java.util.List;
 public class BookDTO {
     private String title;
     private String author;
+    private String type;
     private List<String> genres;
-    private String user_id;
+//    private String user_id;
 
     public BookDTO(){}
 
-    public BookDTO( String title,String author, String user_id, List<String> genres) {
+    public BookDTO( String title,String author,String type, List<String> genres) {
         this.title = title;
         this.author = author;
-        this.user_id = user_id;
+        this.type=type;
+//        this.user_id = user_id;
         this.genres = genres;
     }
 

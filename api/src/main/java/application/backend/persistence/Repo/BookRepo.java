@@ -10,6 +10,5 @@ import java.util.ArrayList;
 
 @Repository
 public interface BookRepo extends CrudRepository<Book,Long> {
-    @Query("select b from Book b where b.user_id= :user_id")
-    ArrayList<Book> findAllBookOfUser(String user_id);
+
 }

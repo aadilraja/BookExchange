@@ -22,9 +22,13 @@ public class Book {
 
     @Column(nullable = false)
     private String author;
-
     @Column(nullable = false)
-    private String user_id;
+    private String type;
+    @Column(nullable = false)
+    private String CoverImgPath;
+
+//    @Column(nullable = false)
+//    private String user_id;
 
     @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "book_genres", joinColumns = @JoinColumn(name = "book_id"))
@@ -33,10 +37,12 @@ public class Book {
 
     public Book() {}
 
-    public Book( String title,String author, String user_id, List<String> genres) {
+    public Book( String title,String author,String CoverImgPath,String type,  List<String> genres) {
         this.title = title;
         this.author = author;
-        this.user_id = user_id;
+        this.type = type;
+        this.CoverImgPath = CoverImgPath;
+//        this.user_id = user_id;
         this.genres = genres;
     }
 

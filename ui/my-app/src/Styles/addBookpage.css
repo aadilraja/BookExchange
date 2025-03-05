@@ -1,34 +1,63 @@
 .add-book-page {
-    height: 100vh; /* Use viewport height */
+    height: 100vh; 
     width: 100%;
     display: flex;
-    flex-direction: column; /* Change to column */
+    flex-direction: row; 
     justify-content: center;
-    align-items: center;
-    gap:20px;
+    align-items: stretch;
 }
-
-form {
+.ImageSelectionSection {
+    flex: 1;
     display: flex;
-    flex-direction: column; /* Change to column */
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+    overflow: auto; 
+}
+.ImageViewCard
+{
+    height:442px;
+    width: 468px;
+    border:1px dashed gray;
+    border-radius:20px;
+}
+.ImageViewCard img
+{   
+    height: 100%;
     width: 100%;
-    max-width: 400px; /* Set a max width for the form */
+    object-fit: contain;
+    
 }
 
-form div {
+.bookDetailSection {   
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto; 
+}
+
+
+form .Form-detail
+{
     width: 100%;
-    margin-bottom: 15px; /* Add spacing between input fields */
+    margin-bottom:20px;
+    box-sizing: border-box;
+
+
 }
 
 form input {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
+    width: 400px;
+    padding: 20px;
+
+    
 }
 form select{
     width: 50%;
-    padding: 10px;
+    padding: 20px;
     box-sizing: border-box;
+    margin-bottom:20px;
 }
+
+
