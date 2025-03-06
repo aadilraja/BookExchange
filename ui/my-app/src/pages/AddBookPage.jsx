@@ -1,10 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from 'react-select';
 import '../styles/AddBookPage.css';
 
 const AddBook = () => {
+    const navigate= useNavigate()
+
     const options = [
         { value: "action", label: "Action" },
         { value: "adventure", label: "Adventure" },
@@ -34,7 +37,7 @@ const AddBook = () => {
         { value: "trueCrime", label: "True Crime" }
     ]
 
-    const [selectedImage, setSelectedImage] = useState(null);
+   const [selectedImage, setSelectedImage] = useState(null);
    const[Book,setBook]=useState({
         title:'',
         author:'',
@@ -105,7 +108,9 @@ const AddBook = () => {
                         "Content-Type": "multipart/form-data",
                     },
                 });
-                
+
+
+                navigate("/Book/${Book.id}")
                 console.log("Product added successfully:", response.data);
                 alert("Product added successfully");
             } catch (error) {

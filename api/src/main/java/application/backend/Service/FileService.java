@@ -11,26 +11,23 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
 
-    public String saveCoverImg(MultipartFile file) throws IOException {
+    public String saveCoverImg(MultipartFile file) throws Exception {
         final String dirPath = "C:\\Project\\BookExchange\\api\\src\\main\\resources\\COVER_IMG\\";
 
-        String filePath = null;
+        File dir = new File(dirPath);
+        if (!dir.exists()) {
+            throw new Exception("Directory doesnt exist: " + dirPath);
+        }
+
+        String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        String filePath = dirPath + fileName;
+
         try {
-            File dir = new File(dirPath);
-            if (!dir.exists()) dir.mkdirs();
-
-
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            filePath = dirPath + fileName;
-
             Files.write(Paths.get(filePath), file.getBytes());
-
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+        } catch (IOException e) {
+            throw new Exception("Failed to save file: " + e.getMessage());
         }
 
         return filePath;
-
     }
 }
