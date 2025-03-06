@@ -4,15 +4,29 @@ import application.backend.Service.BookService;
 import application.backend.Service.FileService;
 import application.backend.persistence.DTO.BookDTO;
 import application.backend.persistence.Model.Book;
+import application.backend.utils.Image;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import application.backend.utils.Mapper;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import java.io.Console;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @RestController
@@ -63,7 +77,7 @@ public class BookController
                     .body("Error adding book: " + e.getMessage());
         }
     }
-    @GetMapping("/book/{bookId}")
+    @GetMapping("/book/search?bookId={bookId}")
     public ResponseEntity<BookDTO>getBook(@PathVariable Long bookId)
     {
         try
@@ -79,6 +93,40 @@ public class BookController
         {
             e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/book/img")
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> getImageDynamicType(@RequestParam Long bookId)
+    {
+
+        if (bookId == null || bookId <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        System.out.println("bookId = " + bookId);
+        try {
+            Book book=bookService.getBookById(bookId);
+            if (book==null) {
+                System.out.println("book not found");
+                return ResponseEntity.notFound().build();
+            }
+            String filePath=book.getCoverImgPath();
+            String fileType= Files.probeContentType(Paths.get(filePath));
+            MediaType imgType = fileType != null ? MediaType.parseMediaType(fileType) : MediaType.IMAGE_JPEG;
+
+            InputStream coverImg= new FileInputStream(new File(filePath));
+
+                return ResponseEntity.ok()
+                        .contentType(imgType)
+                        .cacheControl(CacheControl.maxAge(1, TimeUnit.DAYS))
+                        .body(new InputStreamResource(coverImg));
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

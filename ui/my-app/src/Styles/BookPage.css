@@ -1,0 +1,19 @@
+.BookView
+{   height: 100vh; 
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+}
+.CoverImage
+{
+    height:442px;
+    width: 468px;
+}
+.CoverImage img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
