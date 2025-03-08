@@ -22,6 +22,22 @@ function Home() {
       console.error("Error occurred while redirecting to Add Book page: ", error);
     }
   }
+  const handleRequestBook=()=>
+  {
+    console.log("Request Book button clicked");
+    try {
+      navigate("/RequestBook");
+     
+
+
+    } catch (error) {
+      console.error("Error occurred while redirecting to Request  Book page: ", error);
+    }
+  }
+
+
+
+  
 
   return (
     <div className="landing-page">
@@ -39,7 +55,11 @@ function Home() {
             Faucibus in libero risus semper habitant. Etiam et integer 
             facilisi eget. Lorem ipsum dolor.
           </p>
-          <button className="add-book-btn" onClick={handleAddBook}><span>Add Book</span></button>
+          <div className='btns'>
+              <button className="book-btn" onClick={handleAddBook}><span>Add Book</span></button>
+              <button className="request-book-btn" onClick={handleRequestBook}><span>Request Book</span></button>
+          </div>
+         
         </div>
 
         <div className="image-section">

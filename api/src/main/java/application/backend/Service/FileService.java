@@ -21,12 +21,9 @@ public class FileService {
 
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         String filePath = dirPath + fileName;
+        Files.write(Paths.get(filePath), file.getBytes());
 
-        try {
-            Files.write(Paths.get(filePath), file.getBytes());
-        } catch (IOException e) {
-            throw new Exception("Failed to save file: " + e.getMessage());
-        }
+
 
         return filePath;
     }

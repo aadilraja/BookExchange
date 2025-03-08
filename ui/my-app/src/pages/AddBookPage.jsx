@@ -110,9 +110,9 @@ const AddBook = () => {
                 });
 
 
-                navigate("/Book/${Book.id}")
-                console.log("Product added successfully:", response.data);
-                alert("Product added successfully");
+               
+                console.log("Book added successfully:", response.data);
+                
             } catch (error) {
                 console.error("Error adding Book:", error);
                 

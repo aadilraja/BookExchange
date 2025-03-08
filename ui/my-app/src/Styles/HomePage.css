@@ -1,9 +1,5 @@
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
+
   
   /* Wrapper for the entire page */
   .landing-page {
@@ -41,7 +37,31 @@ body {
     color: #555;
     margin-bottom: 2rem;
   }
-  .add-book-btn {
+  .btns
+  {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+  }
+  .request-book-btn {
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+
+    background-color: transparent;
+    color: black;
+    border: 2px solid rgb(24, 158, 248);
+}
+
+.request-book-btn:hover {
+    background-color: rgb(24, 158, 248);
+    color: white;
+}
+
+  .book-btn {
     padding: 0.75rem 1.5rem;
     background-color: #000;
     color: #fff;
@@ -56,7 +76,7 @@ body {
     overflow: hidden;
 }
 
-.add-book-btn::after {
+.book-btn::after {
     content: "";
     position: absolute;
     left: 0;
@@ -67,23 +87,23 @@ body {
     z-index: 1; /* Lower z-index */
 }
 
-.add-book-btn span {
+.book-btn span {
     position: relative; /* Add this */
     z-index: 2; /* Higher z-index to stay on top */
     transition: color 0.3s ease-in-out;
 }
 
-.add-book-btn:hover::after {
+.book-btn:hover::after {
     left: 0;
     width: 100%;
 }
 
-.add-book-btn:hover span {
+.book-btn:hover span {
     color: #000000;
     animation: scaleUp 0.3s ease-in-out;
 }
 
-.add-book-btn:not(:hover) span {
+.book-btn:not(:hover) span {
     animation: scaleDown 0.3s ease-in-out;
 }
   
@@ -125,7 +145,7 @@ body {
   
   .yellow-text
   {
-    color:#ECC24B
+    color:#cda73d
   }
   /* .yellow-decor
   {

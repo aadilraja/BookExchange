@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as Icon from 'react-bootstrap-icons';
+import decor from '../assets/decor.png';
 import '../Styles/navbar.css';
 
 const Navbar = () => {
@@ -13,7 +14,9 @@ const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="logo-container">
-                <h1 className="logo">Your Logo</h1>
+                <Link to="/" className='logo-Link'>
+                    <h1 className="logo">Your Logo</h1>
+                </Link>
             </div>
             
             <div className="mobile-menu-toggle" onClick={toggleMobileMenu}>
@@ -34,6 +37,7 @@ const Navbar = () => {
                     </Link>
                 </div>
             </div>
+            
         </nav>
     );
 };

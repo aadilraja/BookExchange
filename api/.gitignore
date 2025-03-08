@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ###ResourceFile###
-resources/COVER_IMG/*.jpg
+resources/COVER_IMG/

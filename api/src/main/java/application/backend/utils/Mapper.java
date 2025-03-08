@@ -20,6 +20,7 @@ public class Mapper {
     public BookDTO toDTO(Book book) {
         BookDTO bookDto= new BookDTO();
         bookDto.setTitle(book.getTitle());
+        bookDto.setType(book.getType());
         bookDto.setAuthor(book.getAuthor());
 //        bookDto.setUser_id(book.getUser_id());
         bookDto.setGenres(book.getGenres());
