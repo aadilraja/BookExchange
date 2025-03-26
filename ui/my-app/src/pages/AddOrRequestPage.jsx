@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from 'react-select';
-import '../styles/AddBookPage.css';
+import '../styles/addorRequestPage.css';
 
-const AddBook = () => {
+const AddOrRequest = () => {
     const navigate= useNavigate()
 
     const options = [
@@ -42,6 +42,7 @@ const AddBook = () => {
         title:'',
         author:'',
         type:'',
+        role:'owned',
         genres:[],
    })
 
@@ -145,8 +146,6 @@ const AddBook = () => {
                     )}
 
                 </div>
-               
-
                 
                 <input
                     type="file"
@@ -164,6 +163,7 @@ const AddBook = () => {
                 <div className='Form-detail'>
                     <input type="text" placeholder="Author Name" onChange={handleChangeInput} value={Book.author} name='author' />
                 </div>
+               
                 <div className='Form-detail'>
                     <select name="type" id="Type" value={Book.type} onChange={handleChangeInput} placeholder="Type">
                         <option value="" disabled selected>Select book type</option>
@@ -185,6 +185,11 @@ const AddBook = () => {
                     
                 </div>
                 
+                <fieldset>
+                            <label><input type="radio" name="radio" value="Request"/> Request</label>
+                            <label><input type="radio" name="radio" value="Owned" /> Owned</label>
+                </fieldset>
+               
 
                 <div>
                    <input type="submit" value="Add Book" />
@@ -198,5 +203,5 @@ const AddBook = () => {
     );
 };
 
-export default AddBook;
+export default AddOrRequest;
 

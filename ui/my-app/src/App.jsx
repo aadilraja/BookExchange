@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Home  from './pages/HomePage'
-import AddBook from './pages/AddBookPage'
+import AddOrRequest from './pages/AddOrRequestPage'
 import Book from './pages/BookPage'
 import Navbar from './component/navbar'
 
@@ -14,8 +14,8 @@ function App() {
         <Navbar/>
             <Routes>
               <Route index element={<Home />} />
-              <Route path="/AddBook" element={<AddBook />} />
-              <Route path="/Book/:book_id" element={<Book />} />
+              <Route path="/book/AddOrRequest" element={<AddOrRequest />} />
+              <Route path="/book/:book_id" element={<Book />} />
 
             </Routes>
 

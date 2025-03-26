@@ -27,6 +27,9 @@ public class Book {
 
     @Column(nullable = false)
     private String coverImgPath;
+    @Column(nullable = false)
+    private String role;
+
 
 //    @Column(nullable = false)
 //    private String user_id;
@@ -38,12 +41,13 @@ public class Book {
 
     public Book() {}
 
-    public Book( String title,String author,String coverImgPath,String type,  List<String> genres) {
+    public Book( String title,String author,String coverImgPath,String type,  List<String> genres,String role) {
         this.title = title;
         this.author = author;
         this.type = type;
         this.coverImgPath = coverImgPath;
 //        this.user_id = user_id;
+        this.role = role;
         this.genres = genres;
     }
 

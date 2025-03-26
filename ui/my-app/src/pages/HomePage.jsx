@@ -14,7 +14,7 @@ function Home() {
   const handleAddBook = () => {
     console.log("Add Book button clicked");
     try {
-      navigate("/AddBook");
+      navigate("/book/AddorRequest");
      
 
 
@@ -26,7 +26,7 @@ function Home() {
   {
     console.log("Request Book button clicked");
     try {
-      navigate("/RequestBook");
+      navigate("/book/RequestBook");
      
 
 

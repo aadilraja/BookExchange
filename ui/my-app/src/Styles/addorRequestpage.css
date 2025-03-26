@@ -60,4 +60,28 @@ form select{
     margin-bottom:20px;
 }
 
+fieldset {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc; /* Optional: makes it look neater */
+    border-radius: 8px;
+    padding: 10px 20px;
+    width: fit-content;
+    margin-bottom: 20px; /* Prevent it from taking half the screen */
+}
+
+fieldset label {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    
+}
+
+fieldset input[type="radio"] {
+    margin: 0;
+    width: 60px;
+
+}
+
 
