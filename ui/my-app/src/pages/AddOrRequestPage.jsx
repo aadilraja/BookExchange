@@ -42,7 +42,7 @@ const AddOrRequest = () => {
         title:'',
         author:'',
         type:'',
-        role:'owned',
+        status:'owned',
         genres:[],
    })
 
@@ -91,6 +91,7 @@ const AddOrRequest = () => {
         ))
 
    }
+   
 
    const handleSubmit = async (e) => {
             e.preventDefault();
@@ -186,8 +187,8 @@ const AddOrRequest = () => {
                 </div>
                 
                 <fieldset>
-                            <label><input type="radio" name="radio" value="Request"/> Request</label>
-                            <label><input type="radio" name="radio" value="Owned" /> Owned</label>
+                            <label><input type="radio" name="status" value="Request" onChange={handleChangeInput}/> Request</label>
+                            <label><input type="radio" name="status" value="Owned" onChange={handleChangeInput}/> Owned</label>
                 </fieldset>
                
 

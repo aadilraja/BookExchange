@@ -34,19 +34,18 @@ public class BookController
     }
 
     @PostMapping("/book")
-    public ResponseEntity<?> addBook(@RequestPart BookDTO bookdto)//,
-                                     //@RequestPart MultipartFile coverImg)
+    public ResponseEntity<?> addBook(@RequestPart BookDTO bookdto,
+                                    @RequestPart MultipartFile coverImg)
     {
         try {
-            if(bookdto == null
-                    //coverImg==null
-            ) {
+            if(bookdto == null || coverImg == null) {
+
                 return ResponseEntity.badRequest().body("Book data is missing");
             }
 
             Book book = mapper.toBook(bookdto);
 
-            bookService.addBook(book);
+            bookService.addBook(book,coverImg);
             return ResponseEntity.ok("Book added successfully!");
         }
         catch(Exception e) {

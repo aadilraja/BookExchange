@@ -32,8 +32,7 @@ public class BookService {
 
 
 
-//    public void addBook(Book book,MultipartFile coverImg) throws RuntimeException, IOException {
-        public void addBook(Book book) throws RuntimeException, IOException {
+    public void addBook(Book book,MultipartFile coverImg) throws RuntimeException, IOException {
 
 
             if(bookRepo.existsByTitle(book.getTitle()))
@@ -41,8 +40,8 @@ public class BookService {
                 throw new RuntimeException("Book with following Title already exists");
             }
             try {
-//                String filePath = fileService.saveCoverImg(coverImg);
-//                book.setCoverImgPath(filePath);
+                String filePath = fileService.saveCoverImg(coverImg);
+                book.setCoverImgPath(filePath);
                 bookRepo.save(book);
             }
             catch(Exception e)

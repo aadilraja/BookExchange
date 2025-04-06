@@ -12,8 +12,8 @@ public class Mapper {
         book.setTitle(bookdto.getTitle());
         book.setAuthor(bookdto.getAuthor());
         book.setType(bookdto.getType());
-        book.set
 //        book.setUser_id(bookdto.getUser_id());
+        book.setStatus(bookdto.getStatus());
         book.setGenres(bookdto.getGenres());
         return book;
     }
@@ -24,6 +24,7 @@ public class Mapper {
         bookDto.setType(book.getType());
         bookDto.setAuthor(book.getAuthor());
 //        bookDto.setUser_id(book.getUser_id());
+        bookDto.setStatus(book.getStatus());
         bookDto.setGenres(book.getGenres());
         return bookDto;
     }

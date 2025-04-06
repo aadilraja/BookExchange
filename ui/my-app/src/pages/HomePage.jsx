@@ -57,7 +57,6 @@ function Home() {
           </p>
           <div className='btns'>
               <button className="book-btn" onClick={handleAddBook}><span>Add Book</span></button>
-              <button className="request-book-btn" onClick={handleRequestBook}><span>Request Book</span></button>
           </div>
          
         </div>
@@ -74,6 +73,10 @@ function Home() {
             className="books-image"
           />
         </div>
+      </div>
+      <div className='Matched-Book'>
+        
+
       </div>
     </div>
   );
