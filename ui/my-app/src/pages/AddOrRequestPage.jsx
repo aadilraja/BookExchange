@@ -114,6 +114,11 @@ const AddOrRequest = () => {
 
                
                 console.log("Book added successfully:", response.data);
+                alert("Book added successfully")
+                setTimeout(()=>
+                {
+                    navigate('/')
+                },500)
                 
             } catch (error) {
                 console.error("Error adding Book:", error);

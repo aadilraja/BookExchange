@@ -1,7 +1,9 @@
 package application.backend.utils;
 
 import application.backend.persistence.DTO.BookDTO;
+import application.backend.persistence.DTO.UserInfoDTO;
 import application.backend.persistence.Model.Book;
+import application.backend.persistence.Model.UserInfo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,5 +29,9 @@ public class Mapper {
         bookDto.setStatus(book.getStatus());
         bookDto.setGenres(book.getGenres());
         return bookDto;
+    }
+    public UserInfoDTO toDTO(UserInfo userinfo) {
+        return new UserInfoDTO(userinfo.getUser_id(), userinfo.getUser_name(), userinfo.getUser_dp_path());
+
     }
 }
