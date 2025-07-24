@@ -15,7 +15,7 @@ public class Genre
   private Long id;
   @Column(name = "genreName",nullable=false)
   private String name;
-  @ManyToMany(mappedBy = "genres")
+  @ManyToMany(mappedBy = "genre")
   private Set<Book> books = new HashSet<>();
 
   public Genre() {

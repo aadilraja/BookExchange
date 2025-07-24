@@ -3,6 +3,7 @@ package app.api.Persistence.DTOS;
 import app.api.Persistence.Entity.Genre;
 
 import java.util.HashSet;
+import java.util.Set;
 
 public class BookDTO {
 
@@ -10,15 +11,14 @@ public class BookDTO {
     private String bookTitle;
     private String bookAuthor;
     private String bookCategory;
-    private HashSet<Genre> genres;
-
+    private Set<GenreDTO> genre = new HashSet<>();
     public BookDTO() {}
 
-    public BookDTO(long bookId,String bookAuthor, String bookCategory, String bookTitle, HashSet<Genre> genres) {
+    public BookDTO(long bookId,String bookAuthor, String bookCategory, String bookTitle, Set<GenreDTO> genre) {
         this.bookAuthor = bookAuthor;
         this.bookCategory = bookCategory;
         this.bookTitle = bookTitle;
-        this.genres = genres;
+        this.genre = genre;
         this.bookId = bookId;
     }
 
@@ -54,13 +54,16 @@ public class BookDTO {
         this.bookTitle = bookTitle;
     }
 
-    public HashSet<Genre> getGenres() {
-        return genres;
+    public Set<GenreDTO> getGenre() {
+        return genre;
     }
 
-    public void setGenres(HashSet<Genre> genres) {
-        this.genres = genres;
+    public void setGenre(Set<GenreDTO> genre) {
+        this.genre = genre;
     }
+
+
+
 
 
 

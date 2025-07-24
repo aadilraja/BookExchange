@@ -2,13 +2,14 @@ package app.api.Controller;
 
 import app.api.Persistence.DTOS.BookDTO;
 import app.api.Service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/books")
 @CrossOrigin(origins = "*")
 public class BookController {
 
@@ -19,8 +20,8 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @PostMapping("/AddBook")
-    ResponseEntity<BookDTO> AddBook(@RequestBody BookDTO bookDTO) {
+    @PostMapping
+    ResponseEntity<BookDTO> AddBook(@Valid @RequestBody BookDTO bookDTO) {
 
      BookDTO bookdto =  bookService.persist(bookDTO);
 

@@ -16,26 +16,18 @@ public class BookService {
         this.bookRepo = bookRepo;
     }
 
-
+    //Adding Book to DB
     public BookDTO persist(BookDTO bookDTO) {
-
-        try {
-            Book book = bookMapper.toEntity(bookDTO);
-            if(book==null)
-            {
-                throw new IllegalArgumentException("Invalid book DTO");
-            }
-
-           book= bookRepo.save(book);
-
-            return bookMapper.toDto(book);
-
-
-        }catch (Exception e) {
-            throw e;
-
-
+        if (bookDTO == null) {
+            throw new IllegalArgumentException("Book DTO cannot be null");
         }
 
+        Book book = bookMapper.toEntity(bookDTO);
+        if (book == null) {
+            throw new IllegalArgumentException("Invalid book DTO - mapping failed");
+        }
+
+        book = bookRepo.save(book);
+        return bookMapper.toDto(book);
     }
 }

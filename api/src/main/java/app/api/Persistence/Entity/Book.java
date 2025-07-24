@@ -3,6 +3,7 @@ package app.api.Persistence.Entity;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "book")
@@ -24,8 +25,9 @@ public class Book {
     @Column(name = "bookCategory",nullable=false)
     private String bookCategory;
 
-//    @Column(name = "bookImgPath",nullable=false)
-//    private String bookImgPath;
+    @Column(name = "bookImgPath")
+    private String bookImgPath;
+
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
@@ -33,20 +35,19 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private HashSet<Genre> genres;
-
+    private Set<Genre> genre = new HashSet<>();
 
     public Book() {
     }
 
     // --- Helper methods for managing genres ---
     public void addGenre(Genre genre) {
-        this.genres.add(genre);
+        this.genre.add(genre);
         genre.getBooks().add(this);
     }
 
     public void removeGenre(Genre genre) {
-        this.genres.remove(genre);
+        this.genre.remove(genre);
         genre.getBooks().remove(this);
     }
 
@@ -67,13 +68,6 @@ public class Book {
         this.bookTitle = bookTitle;
     }
 
-    public HashSet<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(HashSet<Genre> genres) {
-        this.genres = genres;
-    }
 
 //    public long getUserId() {
 //        return userId;
@@ -107,5 +101,13 @@ public class Book {
         this.bookId = bookId;
     }
 
+
+    public Set<Genre> getGenres() {
+        return genre;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genre = genres;
+    }
 
 }

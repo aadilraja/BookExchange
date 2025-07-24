@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
@@ -15,7 +14,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> illegalArgumentException(IllegalArgumentException ex) {
 
         ErrorResponse errorResponse=new ErrorResponse(
-           "Exception_in_Argument", //Error Code
+           "INVALID_INPUT", //Error Code
                 ex.getMessage(), //Error Message
                 LocalDateTime.now() //Error TimeStamp
         );
