@@ -14,7 +14,7 @@ public class BookDTO {
     private Set<GenreDTO> genre = new HashSet<>();
     public BookDTO() {}
 
-    public BookDTO(long bookId,String bookAuthor, String bookCategory, String bookTitle, Set<GenreDTO> genre) {
+    public BookDTO(String bookTitle, String bookAuthor, String bookCategory, Set<GenreDTO> genre) {
         this.bookAuthor = bookAuthor;
         this.bookCategory = bookCategory;
         this.bookTitle = bookTitle;

@@ -4,6 +4,14 @@ public class GenreDTO {
     private Long id;
     private String name;
 
+    public GenreDTO() {}
+
+    public GenreDTO(String name) {
+        this.name = name;
+    }
+
+   public GenreDTO(Long id, String name) {}
+
 
 
     public Long getId() {
