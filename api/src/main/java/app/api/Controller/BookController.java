@@ -7,9 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+
 
 @RestController
 @RequestMapping("/api/books")
+@CrossOrigin("*")
 public class BookController {
 
     BookService bookService;
@@ -19,15 +24,18 @@ public class BookController {
         this.bookService = bookService;
     }
 
+
+
     @PostMapping
-    ResponseEntity<BookDTO> AddBook(@Valid @RequestBody BookDTO bookDTO) {
+    ResponseEntity<BookDTO> CreateBook(@Valid @RequestPart BookDTO bookDTO,
+                                              @RequestPart MultipartFile coverImg) throws IOException
+    {
 
-     BookDTO bookdto =  bookService.persist(bookDTO);
+         BookDTO bookdto =  bookService.persist(bookDTO,coverImg);
 
-     return ResponseEntity.status(HttpStatus.CREATED).body(bookdto);
-
-
+         return ResponseEntity.status(HttpStatus.CREATED).body(bookdto);
 
     }
+
 
 }

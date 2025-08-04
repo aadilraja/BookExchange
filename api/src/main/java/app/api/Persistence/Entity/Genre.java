@@ -11,11 +11,11 @@ public class Genre
 {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @Column(name = "genreId",nullable=false)
+  @Column(name = "genre_id",nullable=false)
   private Long id;
-  @Column(name = "genreName",nullable=false)
+  @Column(name = "genre_name",nullable=false)
   private String name;
-  @ManyToMany(mappedBy = "genre")
+  @ManyToMany(mappedBy = "genres")
   private Set<Book> books = new HashSet<>();
 
   public Genre() {

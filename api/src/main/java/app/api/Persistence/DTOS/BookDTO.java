@@ -1,71 +1,80 @@
 package app.api.Persistence.DTOS;
 
-import app.api.Persistence.Entity.Genre;
-
 import java.util.HashSet;
 import java.util.Set;
 
 public class BookDTO {
 
-    private long bookId;
-    private String bookTitle;
-    private String bookAuthor;
-    private String bookCategory;
-    private Set<GenreDTO> genre = new HashSet<>();
+    private long id;
+    // private long userId;
+    private String title;
+    private String author;
+    private String category;
+     private String imageUrl;
+    private Set<GenreDTO> genres = new HashSet<>();
+
     public BookDTO() {}
 
-    public BookDTO(String bookTitle, String bookAuthor, String bookCategory, Set<GenreDTO> genre) {
-        this.bookAuthor = bookAuthor;
-        this.bookCategory = bookCategory;
-        this.bookTitle = bookTitle;
-        this.genre = genre;
-        this.bookId = bookId;
+    public BookDTO(String title, String author, String category, Set<GenreDTO> genres) {
+        this.title = title;
+        this.author = author;
+        this.category = category;
+        this.genres = genres;
     }
 
-    public long getBookId() {
-        return bookId;
-    }
-    public void setBookId(long bookId) {
-        this.bookId = bookId;
+    public long getId() {
+        return id;
     }
 
-
-    public String getBookCategory() {
-        return bookCategory;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setBookCategory(String bookCategory) {
-        this.bookCategory = bookCategory;
+    // public long getUserId() {
+    //     return userId;
+    // }
+
+    // public void setUserId(long userId) {
+    //     this.userId = userId;
+    // }
+
+    public String getTitle() {
+        return title;
     }
 
-    public String getBookAuthor() {
-        return bookAuthor;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setBookAuthor(String bookAuthor) {
-        this.bookAuthor = bookAuthor;
+    public String getAuthor() {
+        return author;
     }
 
-    public String getBookTitle() {
-        return bookTitle;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
+    public String getCategory() {
+        return category;
     }
 
-    public Set<GenreDTO> getGenre() {
-        return genre;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setGenre(Set<GenreDTO> genre) {
-        this.genre = genre;
+     public String getImageUrl() {
+         return imageUrl;
+     }
+
+     public void setImageUrl(String imageUrl) {
+         this.imageUrl = imageUrl;
+     }
+
+    public Set<GenreDTO> getGenres() {
+        return genres;
     }
 
-
-
-
-
-
-
+    public void setGenres(Set<GenreDTO> genres) {
+        this.genres = genres;
+    }
 }

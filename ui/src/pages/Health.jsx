@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Health = () => {
     const [status, setStatus] = useState("");
@@ -7,31 +8,30 @@ const Health = () => {
     const [lastChecked, setLastChecked] = useState(null);
 
     const fetchWebsiteStatus = async () => {
-        try {
-            setLoading(true);
-            setError("");
-            
-            const response = await fetch('http://localhost:8080/api/content/HealthStatus');
-            const healthStatus = await response.json();
-            setStatus(healthStatus.status);
-            setLastChecked(new Date());
-        }
-        catch (err) {
-            console.error(err.message);
-            setError("Failed to fetch status");
-            setStatus("DOWN");
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchWebsiteStatus();
+    try {
+        setLoading(true);
+        setError("");
         
-        // Auto-refresh every 30 seconds
-        const interval = setInterval(fetchWebsiteStatus, 30000);
-        return () => clearInterval(interval);
-    }, []);
+        const response = await axios.get('http://localhost:8080/api/HealthStatus');
+        setStatus(response.data.status);
+        setLastChecked(new Date());
+    }
+    catch (err) {
+        console.error(err.message);
+        setError("Failed to fetch status");
+        setStatus("DOWN");
+    } finally {
+        setLoading(false);
+    }
+}
+
+useEffect(() => {
+    fetchWebsiteStatus();
+    
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(fetchWebsiteStatus, 30000);
+    return () => clearInterval(interval);
+}, []);
 
     const getStatusColor = () => {
         if (loading) return "bg-gray-100 text-gray-600";

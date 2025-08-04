@@ -16,26 +16,26 @@ services:
       - VITE_API_URL=http://api:8080
 
   api:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    ports:
-      # Maps the host port from .env to the container's internal port
-      - "${API_PORT}:${API_PORT}"
-    depends_on:
-      database:
-        # This condition ensures the api service only starts after the database is healthy
-        condition: service_healthy
-    # This tells the service to load all variables from the .env file
-    env_file:
-      - ./.env
-    environment:
-      # Overrides for Docker-specific values
-      - SERVER_PORT=${API_PORT}
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/${POSTGRES_DB}
-      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
-      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
-      - SPRING_PROFILES_ACTIVE=docker
+      build:
+        context: ./api
+        dockerfile: Dockerfile
+        args:
+          - API_PORT=${API_PORT}  
+      ports:
+        - "${API_PORT}:${API_PORT}"
+      depends_on:
+        database:
+          condition: service_healthy
+      env_file:
+        - ./.env
+      environment:
+        - SERVER_PORT=${API_PORT}
+        - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/${POSTGRES_DB}
+        - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+        - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+        - SPRING_PROFILES_ACTIVE=docker
+      volumes:
+        - ./uploads:/app/uploads  
 
   database:
     image: postgres:16-alpine

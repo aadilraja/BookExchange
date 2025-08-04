@@ -49,7 +49,11 @@ public class BookControllerTest { // Injects the MockMvc tool to simulate HTTP r
                         .content(objectMapper.writeValueAsString(newBook))) // Set the request body with our book object converted to JSON
 
                 .andExpect(status().isCreated()) // We expect HTTP Status 201 Created
-                .andExpect(jsonPath("$.bookTitle").value("The Great Gatsby")) // The "bookTitle" should match
-                .andExpect(jsonPath("$.genre[0].name").value("Classic Literature")); // We can even check nested fields
+                .andExpect(jsonPath("$.title").value("The Great Gatsby"))// The "bookTitle" should match
+                .andExpect(jsonPath("$.author").value("F. Scott Fitzgerald"))
+                .andExpect(jsonPath("$.category").value("Fiction"))
+                .andExpect(jsonPath("$.genres[0].name").value("Classic Literature")) // We can even check nested fields
+                .andExpect(jsonPath("$.genres[1].name").value("American Literature")); // We can even check nested fields
+
     }
 }

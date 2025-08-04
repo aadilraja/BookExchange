@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/content")
+@RequestMapping("/api/HealthStatus")
 @CrossOrigin(origins = "*")
 public class HealthController
 {
 
-    @GetMapping("/HealthStatus")
+    @GetMapping
     public ResponseEntity<Map<String, String>> getHealth() {
         return ResponseEntity.ok().body(Map.of("status", "UP"));
     }

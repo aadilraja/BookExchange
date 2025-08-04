@@ -30,10 +30,12 @@ public class BookMapper {
         if(book == null)
             return null;
         BookDTO dto = new BookDTO();
-        dto.setBookAuthor(book.getBookAuthor());
-        dto.setBookTitle(book.getBookTitle());
-        dto.setBookCategory(book.getBookCategory());
-        dto.setGenre(
+        dto.setId(book.getId());
+        dto.setAuthor(book.getAuthor());
+        dto.setTitle(book.getTitle());
+        dto.setCategory(book.getCategory());
+        dto.setImageUrl(book.getImageUrl());
+        dto.setGenres(
                 book.getGenres().stream()
                         .map(genreMapper::toDto)
                         .collect(Collectors.toSet())
@@ -48,12 +50,12 @@ public class BookMapper {
         if(bookDto == null)
             return null;
         Book book = new Book();
-        book.setBookAuthor(bookDto.getBookAuthor());
-        book.setBookTitle(bookDto.getBookTitle());
-        book.setBookCategory(bookDto.getBookCategory());
+        book.setAuthor(bookDto.getAuthor());
+        book.setTitle(bookDto.getTitle());
+        book.setCategory(bookDto.getCategory());
 
-        if (bookDto.getGenre() != null) {
-            bookDto.getGenre().stream()
+        if (bookDto.getGenres() != null) {
+            bookDto.getGenres().stream()
                     .map(genre -> genreRepo.findByName(genre.getName())
                             .orElseGet(() -> new Genre(genre.getName())))
                     .forEach(book::addGenre);
