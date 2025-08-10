@@ -1,4 +1,4 @@
-package app.api.Persistence.mapper;
+package app.api.Service.mapper;
 
 import app.api.Persistence.DTOS.GenreDTO;
 import app.api.Persistence.Entity.Genre;

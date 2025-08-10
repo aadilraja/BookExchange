@@ -3,7 +3,7 @@ package app.api.Service;
 import app.api.Persistence.DTOS.BookDTO;
 import app.api.Persistence.Entity.Book;
 import app.api.Persistence.Repo.BookRepo;
-import app.api.Persistence.mapper.BookMapper;
+import app.api.Service.mapper.BookMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.UnsupportedMediaTypeStatusException;

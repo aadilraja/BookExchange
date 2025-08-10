@@ -89,7 +89,7 @@ const CategoryMenu = ({ selectedCategory, onCategoryChange }) => {
         <div className="relative" ref={dropdownRef}>
             {/* Main input container */}
             <div
-                className={`
+                className={`\
                     min-h-12 w-full border-2 rounded-lg px-3 py-2 cursor-text
                     flex items-center
                     ${isOpen ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400'}

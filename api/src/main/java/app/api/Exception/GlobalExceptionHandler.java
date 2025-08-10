@@ -1,6 +1,7 @@
 package app.api.Exception;
 
-import app.api.Responses.ErrorResponse;
+import app.api.Exception.CustomException.UserAlreadyExistException;
+import app.api.Persistence.DTOS.Responses.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,7 +10,6 @@ import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.server.UnsupportedMediaTypeStatusException;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -18,8 +18,7 @@ public class GlobalExceptionHandler {
 
         ErrorResponse errorResponse=new ErrorResponse(
            "INVALID_INPUT", //Error Code
-                ex.getMessage(), //Error Message
-                LocalDateTime.now() //Error TimeStamp
+                ex.getMessage()//Error Message
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
 
@@ -28,8 +27,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> ioException(IOException ex) {
         ErrorResponse errorResponse=new ErrorResponse(
                 "ERROR_SAVING_FILE",
-                ex.getMessage(),
-                LocalDateTime.now()
+                ex.getMessage()
 
         );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
@@ -38,8 +36,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> unsupportedMediaTypeStatusException(UnsupportedMediaTypeStatusException ex) {
         ErrorResponse errorResponse=new ErrorResponse(
                 "INVALID_MEDIA_TYPE",
-                ex.getMessage(),
-                LocalDateTime.now()
+                ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).body(errorResponse);
     }
@@ -47,10 +44,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> maxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
         ErrorResponse errorResponse=new ErrorResponse(
                 "INVALID_SIZE",
-                ex.getMessage(),
-                LocalDateTime.now()
+                ex.getMessage()
         );
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE).body(errorResponse);
+    }
+    @ExceptionHandler(UserAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> userAlreadyExistException(UserAlreadyExistException ex) {
+        ErrorResponse errorResponse=new ErrorResponse(
+                "INVALID_USER",
+                         ex.getMessage()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
 }

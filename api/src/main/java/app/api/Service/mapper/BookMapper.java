@@ -1,15 +1,13 @@
-package app.api.Persistence.mapper;
+package app.api.Service.mapper;
 
 
 import app.api.Persistence.DTOS.BookDTO;
-import app.api.Persistence.DTOS.GenreDTO;
 import app.api.Persistence.Entity.Book;
 import app.api.Persistence.Entity.Genre;
 import app.api.Persistence.Repo.GenreRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component

@@ -11,7 +11,7 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "book_id", nullable = false)
-    private long id;
+    private Long id;
 
     // @Column(name = "userId")
     // private long userId;

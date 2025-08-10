@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class BookDTO {
 
-    private long id;
+    private Long id;
     // private long userId;
     private String title;
     private String author;

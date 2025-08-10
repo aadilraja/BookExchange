@@ -106,7 +106,7 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
         <div 
           className={`
             min-h-12 w-full border-2 rounded-lg px-3 py-2 cursor-text
-            flex items-center
+            flex items-center 
             ${isOpen ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400'}
             transition-all duration-200
           `}
@@ -146,7 +146,8 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
 
         {/* Dropdown menu */}
         {isOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300
+           rounded-lg shadow-lg max-h-60 overflow-y-auto  ">
             {/* Selected items section (when there are selections) */}
             {selectedItems.length > 0 && !searchTerm && (
               <>

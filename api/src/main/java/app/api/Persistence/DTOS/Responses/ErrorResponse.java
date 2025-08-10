@@ -1,4 +1,4 @@
-package app.api.Responses;
+package app.api.Persistence.DTOS.Responses;
 
 import java.time.LocalDateTime;
 
@@ -7,10 +7,10 @@ public class ErrorResponse {
     private String message;
     private LocalDateTime timestamp;
 
-    public ErrorResponse(String errorCode, String message, LocalDateTime timestamp) {
+    public ErrorResponse(String errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
-        this.timestamp = timestamp;
+        this.timestamp = LocalDateTime.now();
     }
 
     // Getters and setters

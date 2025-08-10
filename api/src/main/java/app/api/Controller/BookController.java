@@ -1,5 +1,6 @@
 package app.api.Controller;
 
+import app.api.Persistence.DTOS.Responses.SuccessResponse;
 import app.api.Persistence.DTOS.BookDTO;
 import app.api.Service.BookService;
 import jakarta.validation.Valid;
@@ -27,13 +28,13 @@ public class BookController {
 
 
     @PostMapping
-    ResponseEntity<BookDTO> CreateBook(@Valid @RequestPart BookDTO bookDTO,
-                                              @RequestPart MultipartFile coverImg) throws IOException
+    ResponseEntity<SuccessResponse<BookDTO>> createBook(@Valid @RequestPart BookDTO bookDTO,
+                                                        @RequestPart MultipartFile coverImg) throws IOException
     {
 
          BookDTO bookdto =  bookService.persist(bookDTO,coverImg);
 
-         return ResponseEntity.status(HttpStatus.CREATED).body(bookdto);
+         return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<BookDTO>("New Book created Successfully",bookdto));
 
     }
 
