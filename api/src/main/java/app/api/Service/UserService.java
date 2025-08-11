@@ -5,21 +5,21 @@ import app.api.Persistence.DTOS.UserCreateDto;
 import app.api.Persistence.DTOS.UserDto;
 import app.api.Persistence.Entity.User;
 import app.api.Persistence.Repo.UserRepo;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import app.api.Service.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
-    public final UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepo userRepo) {
+    public UserService(UserRepo userRepo, UserMapper userMapper) {
         this.userRepo = userRepo;
+        this.userMapper = userMapper;
     }
 
-
+    @Override
     public UserDto persistUser(UserCreateDto request)
     {
 
@@ -29,9 +29,13 @@ public class UserService {
                      + request.getEmail());
          }
 
+         User user =userMapper.toEntity(request);
+         if(user == null || user.getEmail() == null) {
+            throw new IllegalArgumentException("Invalid user data: mapping failed or email is missing");
+        }
+         user=userRepo.save(user);
 
-
-
+         return userMapper.toDto(user);
 
     }
 

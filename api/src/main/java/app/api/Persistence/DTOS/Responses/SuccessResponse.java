@@ -19,6 +19,7 @@ public class SuccessResponse<T> {
         this.data = data;
         this.timestamp =LocalDateTime.now();
     }
+    public SuccessResponse(T data) {}
 
 
     public String getMessage()

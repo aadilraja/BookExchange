@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/auth")
-public class AuthController
+public class UserController
 {
     private final UserService userService;
     @Autowired
-    public AuthController(UserService userService)
+    public UserController(UserService userService)
     {
         this.userService = userService;
 
@@ -26,12 +26,11 @@ public class AuthController
     @PostMapping("/create-user")
     public ResponseEntity<SuccessResponse<UserDto>> createUser(@RequestBody @Valid UserCreateDto request)
     {
-
-
-
        UserDto userDto=userService.persistUser(request);
 
-       return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<>("User is created successfully",userDto));
+       return ResponseEntity
+               .status(HttpStatus.CREATED)
+               .body(new SuccessResponse<>("User is created successfully",userDto));
 
     }
 
