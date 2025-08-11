@@ -15,7 +15,6 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/books")
-@CrossOrigin("*")
 public class BookController {
 
     BookService bookService;
