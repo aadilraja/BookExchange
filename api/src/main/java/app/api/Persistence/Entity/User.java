@@ -15,10 +15,10 @@ public class User {
 
     @Column(name="email",nullable = false, unique = true)
     private String email;
-    @Column(name="password")
+    @Column(name="password",nullable = false)
     private String password;
 
-    @Column(name="name")
+    @Column(name="name",nullable = false)
     private String name;
 //    @Column(name="profile-image-url")
 //    private String profileImageUrl;
@@ -30,8 +30,8 @@ public class User {
 
 
    
-//    @Column(name="is-email-verified")
-//    private boolean isEmailVerified;
+    @Column(name="is-email-verified")
+    private boolean isEmailVerified=false;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
@@ -54,7 +54,7 @@ public class User {
         this.name = name;
         this.password = password;
 //        this.profileImageUrl = profileImageUrl;
-//        this.isEmailVerified = isEmailVerified;
+        this.isEmailVerified = isEmailVerified;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
 
@@ -105,13 +105,13 @@ public class User {
 //        this.profileImageUrl = profileImageUrl;
 //    }
 //
-//    public boolean isEmailVerified() {
-//        return isEmailVerified;
-//    }
-//
-//    public void setEmailVerified(boolean emailVerified) {
-//        isEmailVerified = emailVerified;
-//    }
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+
+    public void setEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
+    }
 
 
 

@@ -7,6 +7,7 @@ import app.api.Persistence.Entity.Role;
 import app.api.Persistence.Entity.User;
 import app.api.Persistence.Repo.RoleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -17,23 +18,26 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
      private final RoleRepo roleRepo;
+     private final PasswordEncoder passwordEncoder;
 
      @Autowired
-     public UserMapper(RoleRepo roleRepo) {
+     public UserMapper(RoleRepo roleRepo, PasswordEncoder passwordEncoder) {
+
          this.roleRepo = roleRepo;
+         this.passwordEncoder = passwordEncoder;
      }
 
-   public User toEntity(UserCreateDto userCreateDto) {
-         if(userCreateDto == null) {
+   public User toEntity(UserCreateDto dto) {
+         if(dto == null) {
              return null;
          }
         User user = new User();
-        user.setName(userCreateDto.getName());
-        user.setEmail(userCreateDto.getEmail());
-        user.setPassword(userCreateDto.getPassword());
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(encodePassword(dto.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
-        user.setRoles(convertStringToRoles(userCreateDto.getRole()));
+        user.setRoles(convertStringToRoles(dto.getRole()));
 
         return user;
 
@@ -54,12 +58,6 @@ public class UserMapper {
          return userDto;
 
     }
-
-
-
-
-
-
     private Set<String> convertRolesToString(Set<Role> roles) {
         return roles.stream()
                 .map(role -> role.getName().toString())
@@ -73,6 +71,9 @@ public class UserMapper {
                             .orElseThrow(() -> new IllegalArgumentException("Role not found: " + eRole));
                 })
                 .collect(Collectors.toSet());
+    }
+    private String encodePassword(String password) {
+         return passwordEncoder.encode(password);
     }
 
 }
