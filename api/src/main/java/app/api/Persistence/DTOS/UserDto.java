@@ -6,15 +6,17 @@ public class UserDto {
     private Long id;
     private String email;
     private String name;
+    private boolean isEmailVerified;
     private Set<String> roles; // Role names as strings
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
 
     // Default constructor
     public UserDto() {}
 
     // Constructor with all fields
-    public UserDto(Long id, String email, String name, Set<String> roles,
+    public UserDto(Long id, String email, String name,boolean isEmailVerified, Set<String> roles,
                    LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.email = email;
@@ -22,6 +24,7 @@ public class UserDto {
         this.roles = roles;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.isEmailVerified = isEmailVerified;
     }
 
     // Getters and Setters
@@ -72,7 +75,12 @@ public class UserDto {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
+    public boolean isEmailVerified() {
+        return isEmailVerified;
+    }
+    public void setEmailVerified(boolean emailVerified) {
+        isEmailVerified = emailVerified;
+    }
     @Override
     public String toString() {
         return "UserDto{" +

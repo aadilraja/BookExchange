@@ -12,14 +12,19 @@ public class SuccessResponse<T> {
 
 
     public SuccessResponse(String message) {
+
         this.message = message;
+        this.timestamp = LocalDateTime.now();
     }
     public SuccessResponse(String message, T data) {
         this.message = message;
         this.data = data;
         this.timestamp =LocalDateTime.now();
     }
-    public SuccessResponse(T data) {}
+    public SuccessResponse(T data) {
+        this.data = data;
+        this.timestamp =LocalDateTime.now();
+    }
 
 
     public String getMessage()

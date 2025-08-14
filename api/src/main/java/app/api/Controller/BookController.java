@@ -5,6 +5,8 @@ import app.api.Persistence.DTOS.BookDTO;
 import app.api.Service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,12 @@ import java.io.IOException;
 public class BookController {
 
     BookService bookService;
+    MessageSource msg;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService,MessageSource msg) {
         this.bookService = bookService;
+        this.msg = msg;
     }
 
 
@@ -32,8 +36,10 @@ public class BookController {
     {
 
          BookDTO bookdto =  bookService.persist(bookDTO,coverImg);
+         String responseMsg=msg.getMessage("success.book.created",null, LocaleContextHolder.getLocale());
 
-         return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<BookDTO>("New Book created Successfully",bookdto));
+         return ResponseEntity.status(HttpStatus.CREATED)
+                 .body(new SuccessResponse<BookDTO>(responseMsg,bookdto));
 
     }
 

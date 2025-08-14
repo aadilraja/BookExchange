@@ -4,11 +4,18 @@ import app.api.Persistence.DTOS.AuthRequest;
 import app.api.Persistence.DTOS.Responses.SuccessResponse;
 import app.api.Persistence.DTOS.UserCreateDto;
 import app.api.Persistence.DTOS.UserDto;
+import app.api.Persistence.Entity.User;
+import app.api.Registeration.OnRegistrationCompleteEvent;
+import app.api.Service.IUserService;
 import app.api.Service.JwtService;
 import app.api.Security.MyUserDetailsService;
-import app.api.Service.UserService;
+import app.api.Service.mapper.UserMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,34 +27,64 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/auth")
 public class UserController
 {
-    private final UserService userService;
+    private final IUserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final MyUserDetailsService userDetailsService;
+    private final UserMapper userMapper;
+    private final ApplicationEventPublisher eventPublisher;
+    private final MessageSource msg;
     @Autowired
-    public UserController(UserService userService, JwtService jwtService,
+    public UserController(IUserService userService, JwtService jwtService,
                           AuthenticationManager authenticationManager,
-                          MyUserDetailsService userDetailsService)
+                          MyUserDetailsService userDetailsService,
+                          UserMapper userMapper,
+                          ApplicationEventPublisher eventPublisher,
+                          MessageSource msg)
     {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
+        this.userMapper = userMapper;
+        this.eventPublisher = eventPublisher;
+        this.msg = msg;
 
     }
 
     @PostMapping("/register")
-    public ResponseEntity<SuccessResponse<UserDto>> createUser(@RequestBody @Valid UserCreateDto request)
+    public ResponseEntity<SuccessResponse<UserDto>> createUser(@RequestBody @Valid UserCreateDto userCreateDto,
+                                                               HttpServletRequest request)
     {
-       UserDto userDto=userService.persistUser(request);
+               User user=userService.persistUser(userCreateDto);
+               String url=request.getContextPath();
 
-       return ResponseEntity
-               .status(HttpStatus.CREATED)
-               .body(new SuccessResponse<>("User is created successfully",userDto));
+
+               eventPublisher.publishEvent(new OnRegistrationCompleteEvent(
+                       user,
+                       request.getLocale(),
+                       url
+               ));
+               return ResponseEntity
+                       .status(HttpStatus.CREATED)
+                       .body(new SuccessResponse<>("User is created successfully",userMapper.toDto(user)));
+
+    }
+    @GetMapping("/registration-confirm")
+    public ResponseEntity<SuccessResponse<?>> confirmRegistration(@RequestParam("token") String token)
+    {
+
+        UserDto userDto=userService.verifyToken(token);
+        String message = msg.getMessage("success.user.verified",
+                new Object[]{userDto.getEmail()},
+                LocaleContextHolder.getLocale()
+        );
+
+        return ResponseEntity.ok(new SuccessResponse<>(message));
 
     }
     @PostMapping("/login")
-    public ResponseEntity<SuccessResponse<String>>authUser(@RequestBody @Valid AuthRequest authRequest)
+    public ResponseEntity<SuccessResponse<String>>authenticateUser(@RequestBody @Valid AuthRequest authRequest)
     {
 
         authenticationManager.authenticate(
@@ -59,11 +96,6 @@ public class UserController
 
         return ResponseEntity.ok(new SuccessResponse<>("User logged in successfully",jwtToken));
 
-    }
-    @GetMapping("/userView")
-    public String userView()
-    {
-        return "hello loged user";
     }
 
 

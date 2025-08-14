@@ -39,8 +39,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers("/api/books","/api/books/**",
-                                        "/api/auth/register","/api/auth/login").permitAll()
-                                .requestMatchers("/api/auth/userView").hasAuthority("USER")
+                                        "/api/auth/register","/api/auth/registration-confirm"
+                                        ,"/api/auth/login").permitAll()
                 )
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sess->sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -35,6 +35,7 @@ public class UserMapper {
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
         user.setPassword(encodePassword(dto.getPassword()));
+        user.setEmailVerified(false);
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
         user.setRoles(convertStringToRoles(dto.getRole()));
@@ -50,6 +51,7 @@ public class UserMapper {
          userDto.setId(user.getId());
          userDto.setName(user.getName());
          userDto.setEmail(user.getEmail());
+         userDto.setEmailVerified(user.isEmailVerified());
          userDto.setUpdatedAt(LocalDateTime.now());
          userDto.setCreatedAt(user.getCreatedAt());
          userDto.setRoles(convertRolesToString(user.getRoles()));

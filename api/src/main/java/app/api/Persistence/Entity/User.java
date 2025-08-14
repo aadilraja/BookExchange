@@ -31,7 +31,7 @@ public class User {
 
    
     @Column(name="is-email-verified")
-    private boolean isEmailVerified=false;
+    private boolean isEmailVerified;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
