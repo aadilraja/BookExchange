@@ -44,15 +44,9 @@ const RegistrationForm = () => {
         }
     };
 
-    const handleGoToLogin = () => {
-        navigate('/user/login');
-    };
+    
 
-    const handleRegisterAnother = () => {
-        setIsRegistered(false);
-        setUserEmail('');
-        setServerError('');
-    };
+   
 
     // Success confirmation view
     if (isRegistered) {

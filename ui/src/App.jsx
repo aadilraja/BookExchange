@@ -1,9 +1,9 @@
-import './App.css'
+import './Styles/App.css'
 import { Routes, Route } from 'react-router-dom';
 import Health from './pages/Health'
 import AddBook from './pages/AddBook'
 import RegisterationForm from './pages/RegisterationForm';
-import ConfirmRegisteration from './Component/ConfirmRegisteration';
+import ConfirmRegisteration from './pages/ConfirmRegisteration'
 import Login from './pages/Login';
 const App = () => {
    return (
