@@ -25,10 +25,10 @@ public class Book {
     @Column(name = "book_category", nullable = false)
     private String category;
 
-     @Column(name = "ImageUrl")
+    @Column(name = "ImageUrl")
     private String imageUrl;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "book_genres",
             joinColumns = @JoinColumn(name = "book_id"),
@@ -37,7 +37,8 @@ public class Book {
     private Set<Genre> genres = new HashSet<>();
 
     // Default constructor
-    public Book() {}
+    public Book() {
+    }
 
     // Constructor with basic fields
     public Book(String title, String author, String category, String imageUrl) {
@@ -48,11 +49,11 @@ public class Book {
     }
 
     // Getters and Setters
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -88,13 +89,13 @@ public class Book {
         this.category = category;
     }
 
-     public String getImageUrl() {
-         return imageUrl;
-     }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-     public void setImageUrl(String imageUrl) {
-         this.imageUrl = imageUrl;
-     }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Set<Genre> getGenres() {
         return genres;
@@ -115,27 +116,4 @@ public class Book {
         genre.getBooks().remove(this);
     }
 
-    // equals and hashCode based on id
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book)) return false;
-        Book book = (Book) o;
-        return id == book.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Long.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
 }

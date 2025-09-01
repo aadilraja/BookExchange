@@ -36,12 +36,14 @@ public class BookController {
     {
 
          BookDTO bookdto =  bookService.persist(bookDTO,coverImg);
-         String responseMsg=msg.getMessage("success.book.created",null, LocaleContextHolder.getLocale());
+         String successMessage="success.book.created";
+         String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
 
          return ResponseEntity.status(HttpStatus.CREATED)
-                 .body(new SuccessResponse<BookDTO>(responseMsg,bookdto));
+                 .body(new SuccessResponse<>(responseMsg, bookdto));
 
     }
+
 
 
 }

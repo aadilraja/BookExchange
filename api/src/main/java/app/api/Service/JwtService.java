@@ -1,14 +1,21 @@
 package app.api.Service;
 
+import app.api.Persistence.DTOS.AuthRequest;
+import app.api.Security.MyUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+
+
+import jakarta.servlet.http.Cookie;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
@@ -22,6 +29,13 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+    private final MyUserDetailsService userDetailsService;
+
+    @Autowired
+    public JwtService(MyUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -31,14 +45,26 @@ public class JwtService {
 
 
 
-    public String generateToken(UserDetails userDetails) {
+
+
+    public Cookie generateToken(AuthRequest authRequest) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
+
         Map<String, Object> claims = new HashMap<>();
         List<String> authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .toList();
         claims.put("authorities", authorities);
 
-        return buildToken(claims, userDetails.getUsername());
+        String jwtToken=buildToken(claims, userDetails.getUsername());
+
+        Cookie cookie = new Cookie("token", jwtToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(3600);
+        cookie.setAttribute("SameSite", "Strict");
+        return cookie;
     }
 
     private String buildToken(Map<String, Object> Claims,String username)

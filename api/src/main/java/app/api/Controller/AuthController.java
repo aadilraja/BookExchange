@@ -10,7 +10,9 @@ import app.api.Service.IUserService;
 import app.api.Service.JwtService;
 import app.api.Security.MyUserDetailsService;
 import app.api.Service.mapper.UserMapper;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,19 +27,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/auth")
-public class UserController
+public class AuthController
 {
     private final IUserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-    private final MyUserDetailsService userDetailsService;
     private final UserMapper userMapper;
     private final ApplicationEventPublisher eventPublisher;
     private final MessageSource msg;
     @Autowired
-    public UserController(IUserService userService, JwtService jwtService,
+    public AuthController(IUserService userService, JwtService jwtService,
                           AuthenticationManager authenticationManager,
-                          MyUserDetailsService userDetailsService,
                           UserMapper userMapper,
                           ApplicationEventPublisher eventPublisher,
                           MessageSource msg)
@@ -45,7 +45,6 @@ public class UserController
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
         this.userMapper = userMapper;
         this.eventPublisher = eventPublisher;
         this.msg = msg;
@@ -57,13 +56,11 @@ public class UserController
                                                                HttpServletRequest request)
     {
                User user=userService.persistUser(userCreateDto);
-               String url=request.getContextPath();
 
 
                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(
                        user,
-                       request.getLocale(),
-                       url
+                       request.getLocale()
                ));
                return ResponseEntity
                        .status(HttpStatus.CREATED)
@@ -84,17 +81,18 @@ public class UserController
 
     }
     @PostMapping("/login")
-    public ResponseEntity<SuccessResponse<String>>authenticateUser(@RequestBody @Valid AuthRequest authRequest)
+    public ResponseEntity<SuccessResponse<?>>authenticateUser(@RequestBody @Valid AuthRequest authRequest,
+                                                              HttpServletResponse response)
     {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
-        UserDetails user = userDetailsService.loadUserByUsername(authRequest.getEmail());
 
-        final String jwtToken = jwtService.generateToken(user);
+        final Cookie token = jwtService.generateToken(authRequest);
+        response.addCookie(token);
 
-        return ResponseEntity.ok(new SuccessResponse<>("User logged in successfully",jwtToken));
+        return ResponseEntity.ok(new SuccessResponse<>("User logged in successfully"));
 
     }
 

@@ -12,17 +12,11 @@ public class UserCreateDto {
     @Size(max=50)
     @ValidEmail
     private String email;
-
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
     private String confirmPassword;
-
-
     private Set<String> role;
-
-
-
     @NotBlank
     @Size(min = 3, max = 20)
     private String name;

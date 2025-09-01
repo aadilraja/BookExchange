@@ -1,18 +1,19 @@
-import { useState } from 'react'
 import './App.css'
 import { Routes, Route } from 'react-router-dom';
 import Health from './pages/Health'
 import AddBook from './pages/AddBook'
-import GenreMenu from './Component/GenreMenu';
-
+import RegisterationForm from './pages/RegisterationForm';
+import ConfirmRegisteration from './Component/ConfirmRegisteration';
+import Login from './pages/Login';
 const App = () => {
    return (
       <>
          <Routes>
             <Route path='/health' element={<Health/>} />
-            <Route path='/Books/new' element={<AddBook />}/>
-            
-
+            <Route path='/books/new' element={<AddBook />}/>
+            <Route path='/user/new' element={<RegisterationForm/>}/>
+            <Route path='/registration-confirm/:token' element={<ConfirmRegisteration/>}/>
+            <Route path='/user/login' element={<Login/>}/>
          </Routes>
       </>
    );

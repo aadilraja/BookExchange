@@ -3,6 +3,7 @@ package app.api.Registeration.Listener;
 import app.api.Persistence.Entity.User;
 import app.api.Registeration.OnRegistrationCompleteEvent;
 import app.api.Service.IUserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
@@ -20,6 +21,10 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     private final MessageSource messages;
 
     private final JavaMailSender mailSender;
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
+
 
 
 
@@ -40,7 +45,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = event.getAppUrl() + "/registration-confirm?token=" + token;
+        String confirmationUrl = frontendUrl + "/registration-confirm/" + token;
         String message = messages.getMessage("message.regSucc", null, event.getLocale());
 
 

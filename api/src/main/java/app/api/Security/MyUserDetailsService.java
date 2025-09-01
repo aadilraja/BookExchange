@@ -39,9 +39,5 @@ public class MyUserDetailsService implements UserDetailsService {
 
     }
 
-    private static List<GrantedAuthority> getAuthorities(Set<Role> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().toString()))
-                .collect(Collectors.toList());
-    }
+
 }

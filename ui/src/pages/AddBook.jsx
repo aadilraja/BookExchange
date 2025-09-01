@@ -18,7 +18,6 @@ const AddBook = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(null);
     const [book, setBook] = useState({
-        id: 0,
         title: "",
         author: "",
         category: "",
@@ -64,7 +63,8 @@ const AddBook = () => {
             {
                     headers: {
                         "Content-Type": "multipart/form-data"
-                    }
+                    },
+                                    withCredentials:'true'
             }
             );
             console.log('Book added successfully:', response.data);
@@ -128,7 +128,7 @@ const AddBook = () => {
     }, [imagePreview]);
 
     return (
-        <div className="min-h-screen bg-gray-50 flex justify-center items-center p-4">
+        <div className="min-h-screen bg-gray-50 flex justify-center items-center p-4 ">
             <div className="w-full max-w-5xl">
                 <div className="bg-white rounded-xl shadow-[0_0_25px_rgba(0,0,0,0.1)] flex flex-col lg:flex-row">
                     {/* Image Upload Section */}

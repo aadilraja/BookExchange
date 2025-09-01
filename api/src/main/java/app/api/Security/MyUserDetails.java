@@ -19,7 +19,6 @@ public class MyUserDetails implements UserDetails {
         this.password = user.getPassword();
         this.isEnabled=user.isEmailVerified();
 
-        // Convert the Set<Role> into a List of SimpleGrantedAuthority
         this.authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
