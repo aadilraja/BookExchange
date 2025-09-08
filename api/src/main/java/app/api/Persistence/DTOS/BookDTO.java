@@ -10,7 +10,9 @@ public class BookDTO {
     private String title;
     private String author;
     private String category;
-     private String imageUrl;
+    private String imageUrl;
+    private String imagePath;
+
     private Set<GenreDTO> genres = new HashSet<>();
 
     public BookDTO() {}
@@ -76,5 +78,13 @@ public class BookDTO {
 
     public void setGenres(Set<GenreDTO> genres) {
         this.genres = genres;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

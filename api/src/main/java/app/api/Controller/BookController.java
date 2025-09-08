@@ -3,6 +3,7 @@ package app.api.Controller;
 import app.api.Persistence.DTOS.Responses.SuccessResponse;
 import app.api.Persistence.DTOS.BookDTO;
 import app.api.Service.BookService;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -59,9 +60,29 @@ public class BookController {
     ResponseEntity<SuccessResponse<BookDTO>>getBookById(@PathVariable("id") Long id)
     {
         BookDTO bookDTO=bookService.getBookById(id);
-        String successMessage="retrieved the book successfully";
+        String successMessage="message.book.retrieved.id";
         String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
         return ResponseEntity.ok(new SuccessResponse<>(responseMsg, bookDTO));
+
+    }
+    @PutMapping("/{id}")
+    ResponseEntity<SuccessResponse<BookDTO>>updateBookById(@PathVariable("id") Long id,
+                                                           @Valid @RequestPart BookDTO bookDTO,
+                                                           @RequestPart(required = false) MultipartFile coverImg)
+                                                           throws IOException
+
+    {
+        BookDTO bookDto=bookService.updateBookById(id,bookDTO,coverImg);
+        String successMessage="message.book.updated";
+        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        return ResponseEntity.ok(new SuccessResponse<>(responseMsg, bookDto));
+    }
+    @DeleteMapping("/{id}")
+    ResponseEntity<SuccessResponse<?>>deleteBookById(@PathVariable("id") Long id) throws IOException {
+        bookService.deleteBookById(id);
+        String successMessage="message.book.deleted";
+        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new SuccessResponse<>(responseMsg));
 
     }
 

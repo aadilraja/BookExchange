@@ -25,8 +25,11 @@ public class Book {
     @Column(name = "book_category", nullable = false)
     private String category;
 
-    @Column(name = "ImageUrl")
+    @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name="image_path")
+    private String imagePath;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -41,11 +44,12 @@ public class Book {
     }
 
     // Constructor with basic fields
-    public Book(String title, String author, String category, String imageUrl) {
+    public Book(String title, String author, String category, String imageUrl,String imagePath) {
         this.title = title;
         this.author = author;
         this.category = category;
         this.imageUrl = imageUrl;
+        this.imagePath = imagePath;
     }
 
     // Getters and Setters
@@ -95,6 +99,12 @@ public class Book {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    public String getImagePath() {
+        return imagePath;
+    }
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Set<Genre> getGenres() {

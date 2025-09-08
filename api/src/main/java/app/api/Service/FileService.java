@@ -49,7 +49,14 @@ public class FileService {
 
     private String generateFileName(String originalFilename) {
 
-        return UUID.randomUUID()+"_"+originalFilename;
+        String sanitizedFilename = originalFilename
+                                    .toLowerCase()
+                                    .trim()
+                                    .replaceAll("\\s+", "_")
+                                    .replaceAll("[^a-z0-9._-]", "_")
+                                    .replaceAll("_+", "_");
+
+        return UUID.randomUUID()+"_"+sanitizedFilename;
     }
 
     private void validateImage(MultipartFile img) {
@@ -63,5 +70,18 @@ public class FileService {
             throw new UnsupportedMediaTypeStatusException("Only JPEG, PNG, and GIF are allowed");
         }
 
+    }
+
+    public void DeleteFileAtPath(String imagePath) throws IOException {
+        Path path = Paths.get(imagePath);
+        if(Files.exists(path))
+        {
+            Files.delete(path);
+        }
+
+
+    }
+    public String extractFileName(String fullPath) {
+        return Paths.get(fullPath).getFileName().toString();
     }
 }

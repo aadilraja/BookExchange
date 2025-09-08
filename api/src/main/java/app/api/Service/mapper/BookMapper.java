@@ -8,7 +8,10 @@ import app.api.Persistence.Repo.GenreRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @Component
 public class BookMapper {
@@ -33,6 +36,7 @@ public class BookMapper {
         dto.setTitle(book.getTitle());
         dto.setCategory(book.getCategory());
         dto.setImageUrl(book.getImageUrl());
+        dto.setImagePath(book.getImagePath());
         dto.setGenres(
                 book.getGenres().stream()
                         .map(genreMapper::toDto)
@@ -61,6 +65,22 @@ public class BookMapper {
 
 
         return book;
+
+
+    }
+
+
+    public void updateEntityFromDto(Book existingBook, BookDTO bookDto) {
+        existingBook.setAuthor(bookDto.getAuthor());
+        existingBook.setTitle(bookDto.getTitle());
+        existingBook.setCategory(bookDto.getCategory());
+
+        if (bookDto.getGenres() != null) {
+            bookDto.getGenres().stream()
+                    .map(genre -> genreRepo.findByName(genre.getName())
+                            .orElseGet(() -> new Genre(genre.getName())))
+                    .forEach(existingBook::addGenre);
+        }
 
 
     }
