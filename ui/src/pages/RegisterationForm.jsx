@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import {CheckCircle} from 'lucide-react';
+import logo from '../assets/logo.png'
 
 const RegistrationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -9,12 +11,13 @@ const RegistrationForm = () => {
     const [isRegistered, setIsRegistered] = useState(false); // New state for success
     const [userEmail, setUserEmail] = useState(''); // Store email for confirmation message
 
+    const navigate=useNavigate();
+
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm({
         mode: 'onBlur'
     });
     
     const password = watch('password');
-    const navigate = useNavigate();
 
     const onSubmit = async (data) => {
         setIsSubmitting(true); 
@@ -52,20 +55,18 @@ const RegistrationForm = () => {
     if (isRegistered) {
         return (
             <div className="bg-gray-100 min-h-screen flex justify-center items-center font-sans">
-                <div className='bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center'>
+                <div className=' p-8   w-full max-w-md text-center '>
                     <div className="mb-6">
                         {/* Success icon */}
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                            </svg>
-                        </div>
+                         <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center animate-bounce">
+                          <CheckCircle className="w-8 h-8 text-green-600" />
+                         </div>
                         
-                        <h1 className='text-3xl font-bold mb-2 text-gray-800'>Registration Successful!</h1>
+                        <h1 className='text-3xl font-bold mb-2 text-gray-800 mt-2'>Registration Successful!</h1>
                         <p className="text-gray-600 mb-4">
                             Welcome! Your account has been created successfully.
                         </p>
-                        <p className="text-sm text-gray-500 mb-6">
+                        <p className="text-sm text-gray-500 mt-2 mb-6">
                             A confirmation email has been sent to <span className="font-medium">{userEmail}</span>
                         </p>
                     </div>
@@ -79,8 +80,11 @@ const RegistrationForm = () => {
     // Original registration form
     return (
         <div className="bg-gray-100 min-h-screen flex justify-center items-center font-sans">
-            <div className='bg-white p-8 rounded-xl shadow-lg w-full max-w-md'>
-                <h1 className='text-3xl font-bold mb-6 text-center text-gray-800'>Create Your Account</h1>
+            <div className='bg-white p-2 rounded-xl shadow-lg w-full max-w-md '>
+                <div className='w-[165px] h-[165px] rounded-full mx-auto'>
+                    <img src={logo} alt='logo' className="w-full h-full object-contain" />
+                </div>
+                <h1 className='text-[24px] font-bold mb-3  text-center text-gray-800'>Create Your Account</h1>
                 
                 <form className='space-y-4' onSubmit={handleSubmit(onSubmit)} noValidate>
                     {/* Name Input */}
@@ -160,6 +164,12 @@ const RegistrationForm = () => {
                         {isSubmitting ? 'Signing Up...' : 'Sign Up'}
                     </button>
                 </form>
+                <p className="text-sm text-gray-600">
+                        Already have an account?{' '}
+                        <button className="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
+                            Login
+                        </button>
+            </p>
             </div>
         </div>
     );

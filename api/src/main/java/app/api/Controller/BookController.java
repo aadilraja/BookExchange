@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @RestController
@@ -44,6 +45,25 @@ public class BookController {
 
     }
 
+    @GetMapping
+    ResponseEntity<SuccessResponse<List<BookDTO>>> getAllBooks()
+    {
+        List<BookDTO> books=bookService.getAllBooks();
+        String successMessage="message.book.retrieved";
+        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+
+        return ResponseEntity.ok(new SuccessResponse<>(responseMsg, books));
+
+    }
+    @GetMapping("/{id}")
+    ResponseEntity<SuccessResponse<BookDTO>>getBookById(@PathVariable("id") Long id)
+    {
+        BookDTO bookDTO=bookService.getBookById(id);
+        String successMessage="retrieved the book successfully";
+        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        return ResponseEntity.ok(new SuccessResponse<>(responseMsg, bookDTO));
+
+    }
 
 
 }
