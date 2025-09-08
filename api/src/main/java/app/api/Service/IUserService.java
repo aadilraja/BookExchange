@@ -4,6 +4,7 @@ import app.api.Persistence.DTOS.UserCreateDto;
 import app.api.Persistence.DTOS.UserDto;
 import app.api.Persistence.Entity.User;
 import app.api.Persistence.Entity.VerificationToken;
+import jakarta.servlet.http.Cookie;
 
 public interface IUserService {
     User persistUser(UserCreateDto request);
@@ -12,4 +13,6 @@ public interface IUserService {
 //    void enableUser(User user);
 
     UserDto verifyToken(String token);
+
+    Cookie generateLogoutCookie();
 }

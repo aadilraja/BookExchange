@@ -253,6 +253,7 @@ const AddBook = () => {
                                     Genres
                                 </label>
                                 <GenreMenu 
+                                    selectedCategory={book.category}
                                     selectedGenres={book.genres}
                                     onGenresChange={handleGenresChange}
                                 />

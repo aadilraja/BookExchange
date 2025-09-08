@@ -3,18 +3,17 @@ import { ChevronDown } from 'lucide-react';
 
 // In a real app, this would likely be passed as a prop or fetched from an API.
 const allCategories = [
-    "Fiction",
-    "Non-Fiction",
-    "Science Fiction",
-    "Fantasy",
-    "Mystery",
-    "Thriller",
-    "Biography",
-    "History",
-    "Self-Help",
-    "Business",
-    "Children's"
+  "Fiction",
+  "Non-Fiction",
+  "Children's",
+  "Young Adult",
+  "Biography",
+  "History",
+  "Self-Help",
+  "Business",
+  "Academic/Reference"
 ];
+
 
 /**
  * A searchable dropdown menu component for categories.

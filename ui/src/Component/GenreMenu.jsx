@@ -1,34 +1,46 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, X } from 'lucide-react';
 
-export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
+const categoryGenreMap = {
+  "Fiction": [
+    "Mystery", "Thriller", "Science Fiction", "Fantasy", "Horror", "Romance",
+    "Historical Fiction", "Crime", "Adventure", "Paranormal", "Dystopian",
+    "Contemporary", "Literary Fiction", "Humor", "Western", "Drama"
+  ],
+  "Non-Fiction": [
+    "Biography", "Memoir", "History", "Self-Help", "Business",
+    "True Crime", "Travel", "Philosophy", "Science/Technology"
+  ],
+  "Children's": [
+    "Adventure", "Fantasy", "Humor", "Contemporary", "Poetry"
+  ],
+  "Young Adult": [
+    "Fantasy", "Romance", "Mystery", "Adventure", "Dystopian",
+    "Paranormal", "Contemporary", "Drama"
+  ],
+  "Biography": [
+    "Memoir", "Autobiography", "Historical"
+  ],
+  "History": [
+    "Military History", "Political History", "Cultural History", "Biography (Historical Figures)"
+  ],
+  "Self-Help": [
+    "Motivational", "Psychology", "Health & Wellness", "Productivity"
+  ],
+  "Business": [
+    "Entrepreneurship", "Leadership", "Finance", "Economics"
+  ],
+  "Academic/Reference": [
+    "Textbook", "Dictionary", "Encyclopedia", "Research"
+  ]
+};
+
+export default function GenreMenu({ selectedGenres = [], onGenresChange, selectedCategory }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState(selectedGenres);
   const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
-
-  // Sample options - replace with your data
-  const options = [
-    "Mystery",
-    "Thriller", 
-    "Science Fiction",
-    "Horror",
-    "Fantasy",
-    "Romance",
-    "Historical Fiction",
-    "Young Adult",
-    "Crime",
-    "Adventure",
-    "Paranormal",
-    "Dystopian",
-    "Contemporary",
-    "Literary Fiction",
-    "Humor",
-    "Western",
-    "Poetry",
-    "Drama"
-  ];
 
   // Sync with parent component
   useEffect(() => {
@@ -42,8 +54,9 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
     }
   }, [selectedItems, onGenresChange]);
 
-  // Filter options based on search term and exclude already selected items
-  const filteredOptions = options.filter(option => 
+  const options = selectedCategory ? categoryGenreMap[selectedCategory] || [] : [];
+
+  const filteredOptions = options.filter(option =>
     option.toLowerCase().includes(searchTerm.toLowerCase()) &&
     !selectedItems.includes(option)
   );
@@ -55,7 +68,6 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -86,7 +98,6 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
     }
   };
 
-  // Get display text for the input
   const getDisplayText = () => {
     if (searchTerm) return searchTerm;
     if (selectedItems.length === 0) return '';
@@ -95,6 +106,7 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
   };
 
   const getPlaceholder = () => {
+    if (!selectedCategory) return "Select a category first...";
     if (selectedItems.length === 0) return "Search and Select Genres...";
     return "";
   };
@@ -109,8 +121,9 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
             flex items-center 
             ${isOpen ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400'}
             transition-all duration-200
+            ${!selectedCategory ? 'bg-gray-100 cursor-not-allowed' : ''}
           `}
-          onClick={handleInputClick}
+          onClick={selectedCategory ? handleInputClick : undefined}
         >
           {/* Search input */}
           <input
@@ -121,10 +134,11 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
             onKeyDown={handleKeyDown}
             placeholder={getPlaceholder()}
             className="flex-1 outline-none bg-transparent text-gray-700 placeholder-gray-400"
-            readOnly={selectedItems.length > 1 && !searchTerm}
+            readOnly={!selectedCategory || (selectedItems.length > 1 && !searchTerm)}
+            disabled={!selectedCategory}
           />
           
-          {/* Clear button when items are selected */}
+          {/* Clear button */}
           {selectedItems.length > 0 && !searchTerm && (
             <button
               onClick={(e) => {
@@ -138,45 +152,43 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange }) {
           )}
           
           {/* Dropdown arrow */}
-          <ChevronDown 
-            size={20} 
-            className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-          />
+          {selectedCategory && (
+            <ChevronDown 
+              size={20} 
+              className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+            />
+          )}
         </div>
 
         {/* Dropdown menu */}
-        {isOpen && (
+        {isOpen && selectedCategory && (
           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300
-           rounded-lg shadow-lg max-h-60 overflow-y-auto  ">
-            {/* Selected items section (when there are selections) */}
+           rounded-lg shadow-lg max-h-60 overflow-y-auto">
             {selectedItems.length > 0 && !searchTerm && (
-              <>
-                <div className="px-3 py-2 bg-gray-50 border-b border-gray-200">
-                  <div className="text-xs font-medium text-gray-600 mb-2">Selected Genres:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {selectedItems.map((item, index) => (
-                      <span 
-                        key={index}
-                        className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium"
+              <div className="px-3 py-2 bg-gray-50 border-b border-gray-200">
+                <div className="text-xs font-medium text-gray-600 mb-2">Selected Genres:</div>
+                <div className="flex flex-wrap gap-1">
+                  {selectedItems.map((item, index) => (
+                    <span 
+                      key={index}
+                      className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium"
+                    >
+                      {item}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          removeSelectedItem(item);
+                        }}
+                        className="hover:bg-blue-200 rounded p-0.5 transition-colors"
                       >
-                        {item}
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeSelectedItem(item);
-                          }}
-                          className="hover:bg-blue-200 rounded p-0.5 transition-colors"
-                        >
-                          <X size={12} />
-                        </button>
-                      </span>
-                    ))}
-                  </div>
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
                 </div>
-              </>
+              </div>
             )}
 
-            {/* Available options */}
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, index) => (
                 <div

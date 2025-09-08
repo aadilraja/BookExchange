@@ -95,7 +95,15 @@ public class AuthController
         return ResponseEntity.ok(new SuccessResponse<>("User logged in successfully"));
 
     }
+    @PostMapping("/logout")
+    public ResponseEntity<SuccessResponse<?>>logoutUser(HttpServletResponse response)
+    {
+        Cookie cookie = userService.generateLogoutCookie();
+        response.addCookie(cookie);
 
+        return ResponseEntity.ok(new SuccessResponse<>("User logged out successfully"));
+
+    }
 
 
 

@@ -8,6 +8,7 @@ import app.api.Persistence.Entity.VerificationToken;
 import app.api.Persistence.Repo.UserRepo;
 import app.api.Persistence.Repo.VerificationTokenRepo;
 import app.api.Service.mapper.UserMapper;
+import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -72,6 +73,18 @@ public class UserService implements IUserService {
 
         return userMapper.toDto(user);
     }
+    @Override
+    public Cookie generateLogoutCookie()
+    {
+        Cookie cookie = new Cookie("token", "");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        cookie.setAttribute("SameSite", "Strict");
+        return cookie;
+    }
+
 
     private Optional<VerificationToken> getVerificationToken(String token) {
         return tokenRepo.findByToken(token);
