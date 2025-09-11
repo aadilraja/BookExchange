@@ -37,6 +37,7 @@ public class BookMapper {
         dto.setCategory(book.getCategory());
         dto.setImageUrl(book.getImageUrl());
         dto.setImagePath(book.getImagePath());
+        dto.setType(book.getType());
         dto.setGenres(
                 book.getGenres().stream()
                         .map(genreMapper::toDto)
@@ -55,6 +56,7 @@ public class BookMapper {
         book.setAuthor(bookDto.getAuthor());
         book.setTitle(bookDto.getTitle());
         book.setCategory(bookDto.getCategory());
+        book.setType(bookDto.getType());
 
         if (bookDto.getGenres() != null) {
             bookDto.getGenres().stream()
@@ -74,6 +76,7 @@ public class BookMapper {
         existingBook.setAuthor(bookDto.getAuthor());
         existingBook.setTitle(bookDto.getTitle());
         existingBook.setCategory(bookDto.getCategory());
+        existingBook.setType(bookDto.getType());
 
         if (bookDto.getGenres() != null) {
             bookDto.getGenres().stream()

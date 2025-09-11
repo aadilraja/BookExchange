@@ -10,6 +10,7 @@ public class BookDTO {
     private String title;
     private String author;
     private String category;
+    private String type;
     private String imageUrl;
     private String imagePath;
 
@@ -17,11 +18,12 @@ public class BookDTO {
 
     public BookDTO() {}
 
-    public BookDTO(String title, String author, String category, Set<GenreDTO> genres) {
+    public BookDTO(String title, String author, String category, Set<GenreDTO> genres,String type) {
         this.title = title;
         this.author = author;
         this.category = category;
         this.genres = genres;
+        this.type = type;
     }
 
     public Long getId() {
@@ -86,5 +88,11 @@ public class BookDTO {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 }

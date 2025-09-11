@@ -25,6 +25,9 @@ public class Book {
     @Column(name = "book_category", nullable = false)
     private String category;
 
+    @Column(name="book_type",nullable = false)
+    private String type;
+
     @Column(name = "image_url")
     private String imageUrl;
 
@@ -44,12 +47,13 @@ public class Book {
     }
 
     // Constructor with basic fields
-    public Book(String title, String author, String category, String imageUrl,String imagePath) {
+    public Book(String title, String author, String category, String imageUrl,String imagePath,String type) {
         this.title = title;
         this.author = author;
         this.category = category;
         this.imageUrl = imageUrl;
         this.imagePath = imagePath;
+        this.type = type;
     }
 
     // Getters and Setters
@@ -113,6 +117,12 @@ public class Book {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+    public String getType() {
+        return type;
+    }
+    public void setType(String type) {
+        this.type = type;
     }
 
     // Helper methods for managing genres

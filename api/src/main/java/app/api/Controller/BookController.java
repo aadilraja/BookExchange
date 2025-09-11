@@ -31,7 +31,7 @@ public class BookController {
     }
 
 
-
+//TODO: have to extract user Id from jwt token in the httpOnly cookie
     @PostMapping
     ResponseEntity<SuccessResponse<BookDTO>> createBook(@Valid @RequestPart BookDTO bookDTO,
                                                         @RequestPart MultipartFile coverImg) throws IOException

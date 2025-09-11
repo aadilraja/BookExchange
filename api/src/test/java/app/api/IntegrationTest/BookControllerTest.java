@@ -39,7 +39,8 @@ public class BookControllerTest { // Injects the MockMvc tool to simulate HTTP r
                 "The Great Gatsby",
                 "F. Scott Fitzgerald",
                 "Fiction",
-                Set.of(genre1, genre2)
+                Set.of(genre1, genre2),
+                "Novel"
         );
 
 
