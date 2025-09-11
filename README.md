@@ -1,5 +1,4 @@
 # BookExchange
-<br>
 
 ## A community marketplace for readers to swap books they've finished for stories they're waiting to discover.
 
