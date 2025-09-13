@@ -47,6 +47,10 @@ public class UserService implements IUserService {
          return user;
 
     }
+    public User findUserById(Long id)
+    {
+     return userRepo.findById(id).orElse(null);
+    }
 
 
     private boolean EmailExist(String email) {

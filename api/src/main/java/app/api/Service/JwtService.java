@@ -1,6 +1,7 @@
 package app.api.Service;
 
 import app.api.Persistence.DTOS.AuthRequest;
+import app.api.Security.MyUserDetails;
 import app.api.Security.MyUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+
 
 @Service
 public class JwtService {
@@ -55,6 +57,7 @@ public class JwtService {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
         claims.put("authorities", authorities);
+        claims.put("userId", ((MyUserDetails) userDetails).getId());
 
         String jwtToken=buildToken(claims, userDetails.getUsername());
 
@@ -87,6 +90,9 @@ public class JwtService {
     }
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
+    }
+    public Long extractUserId(String token) {
+        return extractClaim(token, claims -> claims.get("userId", Long.class));
     }
 
     public Date extractExpiration(String token) {

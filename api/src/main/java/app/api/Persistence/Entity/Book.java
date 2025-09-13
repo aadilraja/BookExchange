@@ -13,8 +13,18 @@ public class Book {
     @Column(name = "book_id", nullable = false)
     private Long id;
 
-    // @Column(name = "userId")
-    // private long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "book_genres",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
 
     @Column(name = "book_title", nullable = false)
     private String title;
@@ -34,13 +44,7 @@ public class Book {
     @Column(name="image_path")
     private String imagePath;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "book_genres",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id")
-    )
-    private Set<Genre> genres = new HashSet<>();
+
 
     // Default constructor
     public Book() {
@@ -65,13 +69,13 @@ public class Book {
         this.id = id;
     }
 
-    // public long getId() {
-    //     return id;
-    // }
+     public User getUser() {
+         return user;
+     }
 
-    // public void setUserId(long userId) {
-    //     this.userId = userId;
-    // }
+     public void setUser(User user) {
+         this.user = user;
+     }
 
     public String getTitle() {
         return title;
@@ -125,7 +129,6 @@ public class Book {
         this.type = type;
     }
 
-    // Helper methods for managing genres
     public void addGenre(Genre genre) {
         this.genres.add(genre);
         genre.getBooks().add(this);

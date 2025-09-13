@@ -3,7 +3,9 @@ package app.api.Persistence.Entity;
 import jakarta.persistence.*;
 import app.api.Persistence.Entity.Role;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,6 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "userId")
     private Long id;
 
     @Column(name="email",nullable = false, unique = true)
@@ -20,6 +23,12 @@ public class User {
 
     @Column(name="name",nullable = false)
     private String name;
+
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Book> books = new ArrayList<>();
+
 //    @Column(name="profile-image-url")
 //    private String profileImageUrl;
 
@@ -58,6 +67,14 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
 
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public long getId() {
@@ -131,6 +148,15 @@ public class User {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    public void addBook(Book book) {
+        this.books.add(book);
+        book.setUser(this);
+    }
+    public void removeBook(Book book) {
+        this.books.remove(book);
+        book.setUser(null);
+
     }
 
 

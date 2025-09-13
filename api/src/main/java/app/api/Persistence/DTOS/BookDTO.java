@@ -6,7 +6,7 @@ import java.util.Set;
 public class BookDTO {
 
     private Long id;
-    // private long userId;
+    private UserDto user;
     private String title;
     private String author;
     private String category;
@@ -34,13 +34,7 @@ public class BookDTO {
         this.id = id;
     }
 
-    // public long getUserId() {
-    //     return userId;
-    // }
 
-    // public void setUserId(long userId) {
-    //     this.userId = userId;
-    // }
 
     public String getTitle() {
         return title;
@@ -94,5 +88,13 @@ public class BookDTO {
     }
     public void setType(String type) {
         this.type = type;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
     }
 }

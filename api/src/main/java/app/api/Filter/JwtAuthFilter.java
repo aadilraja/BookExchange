@@ -67,6 +67,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
 
     }
+    public Long extractUserId(HttpServletRequest request) {
+        String token = getJwtFromCookie(request);
+        if (token != null) {
+            return jwtService.extractUserId(token);
+        }
+        return null;
+    }
+
 
     private String getJwtFromCookie(HttpServletRequest request) {
         if (request.getCookies() != null) {

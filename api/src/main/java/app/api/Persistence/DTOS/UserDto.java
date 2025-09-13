@@ -1,6 +1,7 @@
 package app.api.Persistence.DTOS;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 public class UserDto {
     private Long id;
@@ -10,6 +11,7 @@ public class UserDto {
     private Set<String> roles; // Role names as strings
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private List<BookDTO> books;
 
 
     // Default constructor
@@ -81,6 +83,13 @@ public class UserDto {
     public void setEmailVerified(boolean emailVerified) {
         isEmailVerified = emailVerified;
     }
+    List<BookDTO> getBooks() {
+        return books;
+    }
+    void setBooks(List<BookDTO> books) {
+        this.books = books;
+    }
+
     @Override
     public String toString() {
         return "UserDto{" +

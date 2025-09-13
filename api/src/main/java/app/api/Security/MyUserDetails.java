@@ -11,12 +11,14 @@ import java.util.stream.Collectors;
 public class MyUserDetails implements UserDetails {
     private final String username; // User Email
     private final String password;
+    private final Long id;
     private final Collection<? extends GrantedAuthority> authorities;
     private final boolean isEnabled;
 
     public MyUserDetails(User user) {
         this.username = user.getEmail();
         this.password = user.getPassword();
+        this.id = user.getId();
         this.isEnabled=user.isEmailVerified();
 
         this.authorities = user.getRoles().stream()
@@ -37,6 +39,10 @@ public class MyUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+    public Long getId()
+    {
+        return id;
     }
 
     // These should be mapped from your User entity if you add fields for them

@@ -3,7 +3,9 @@ package app.api.Controller;
 import app.api.Persistence.DTOS.Responses.SuccessResponse;
 import app.api.Persistence.DTOS.BookDTO;
 import app.api.Service.BookService;
+import app.api.Service.JwtService;
 import jakarta.annotation.Nullable;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -21,11 +23,11 @@ import java.util.List;
 @RequestMapping("/api/books")
 public class BookController {
 
-    BookService bookService;
-    MessageSource msg;
+  private final BookService bookService;
+ private final  MessageSource msg;
 
     @Autowired
-    public BookController(BookService bookService,MessageSource msg) {
+    public BookController(BookService bookService, MessageSource msg) {
         this.bookService = bookService;
         this.msg = msg;
     }
@@ -34,12 +36,14 @@ public class BookController {
 //TODO: have to extract user Id from jwt token in the httpOnly cookie
     @PostMapping
     ResponseEntity<SuccessResponse<BookDTO>> createBook(@Valid @RequestPart BookDTO bookDTO,
-                                                        @RequestPart MultipartFile coverImg) throws IOException
+                                                        @RequestPart MultipartFile coverImg, HttpServletRequest request)
+                                                        throws IOException
     {
 
-         BookDTO bookdto =  bookService.persist(bookDTO,coverImg);
+         BookDTO bookdto =  bookService.persist(bookDTO,coverImg,request);
          String successMessage="success.book.created";
          String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+
 
          return ResponseEntity.status(HttpStatus.CREATED)
                  .body(new SuccessResponse<>(responseMsg, bookdto));
