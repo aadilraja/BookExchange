@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -38,6 +39,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         jwtToken = getJwtFromCookie(request);
 
+        System.out.println("JWT token received from the Cookie"+jwtToken);
+
         // if (jwtToken == null) {
         //     String authHeader = request.getHeader("Authorization");
         //     if (authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -49,6 +52,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             username = jwtService.extractUsername(jwtToken);
 
         }
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
@@ -70,7 +74,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     public Long extractUserId(HttpServletRequest request) {
         String token = getJwtFromCookie(request);
         if (token != null) {
-            return jwtService.extractUserId(token);
+            Long userId=jwtService.extractUserId(token);
+            return userId ;
         }
         return null;
     }
@@ -79,11 +84,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private String getJwtFromCookie(HttpServletRequest request) {
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
+                System.out.println("Debug:"+"Cookie Name:"+cookie.getName() +"\nCookie Value:" + cookie.getValue());
                 if ("token".equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }
         }
+        else System.out.println("Cookie is empty");
         return null;
     }
 }

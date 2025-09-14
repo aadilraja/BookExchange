@@ -31,7 +31,9 @@ export default function LoginForm() {
     setSubmitMessage({ type: '', text: '' });
 
     try {
-       const response = await axios.post('http://localhost:8080/api/auth/login', data);
+       const response = await axios.post('http://localhost:8080/api/auth/login', data,{
+                                    withCredentials: true
+       });
 
       if (response.status===200) {
         setSubmitMessage({ 

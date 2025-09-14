@@ -82,14 +82,24 @@ public class AuthController
     }
     @PostMapping("/login")
     public ResponseEntity<SuccessResponse<?>>authenticateUser(@RequestBody @Valid AuthRequest authRequest,
-                                                              HttpServletResponse response)
+                                                              HttpServletResponse response,
+                                                              HttpServletRequest request)
     {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
         );
 
-        final Cookie token = jwtService.generateToken(authRequest);
+        final Cookie token = jwtService.generateToken(authRequest,request);
+        System.out.println("=== COOKIE DEBUG ===");
+        System.out.println("Cookie Name: " + token.getName());
+        System.out.println("Cookie Value: " + token.getValue());
+        System.out.println("Cookie Path: " + token.getPath());
+        System.out.println("Cookie Secure: " + token.getSecure());
+        System.out.println("Cookie HttpOnly: " + token.isHttpOnly());
+        System.out.println("Cookie MaxAge: " + token.getMaxAge());
+        System.out.println("===================");
+
         response.addCookie(token);
 
         return ResponseEntity.ok(new SuccessResponse<>("User logged in successfully"));

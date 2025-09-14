@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.UnsupportedMediaTypeStatusException;
 
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -46,32 +47,36 @@ public class BookService {
     public BookDTO persist(BookDTO bookDTO, MultipartFile imgFile, HttpServletRequest request) throws
                                                                          IOException,
                                                                          IllegalArgumentException,
-                                                                         UnsupportedMediaTypeStatusException {
+                                                                         UnsupportedMediaTypeStatusException
+    {
         if (bookDTO == null||imgFile==null) {
             throw new IllegalArgumentException("Request cannot be null");
         }
 
-
-
         Long userId = jwtAuthFilter.extractUserId(request);
 
+
+        if(userId==null) {
+            throw new AccessDeniedException("User Id in Jwt token cannot be null");
+        }
+
         User user = userService.findUserById(userId);
+
         if (user == null) {
             throw new EntityNotFoundException("User not found");
         }
-
-
         Book book = bookMapper.toEntity(bookDTO);
         if (book == null) {
             throw new IllegalArgumentException("Invalid book  - mapping failed");
         }
+        book.setUser(user);
         String imgPath=fileService.uploadImage(imgFile);
         String imgUrl = baseUrl + "/api/books/images/" +fileService.extractFileName(imgPath);
-
         book.setImageUrl(imgUrl);
         book.setImagePath(imgPath);
-        book=bookRepo.save(book);
 
+
+        book=bookRepo.save(book);
 
        return bookMapper.toDto(book);
     }

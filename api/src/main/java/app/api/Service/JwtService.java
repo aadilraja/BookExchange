@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -48,8 +49,8 @@ public class JwtService {
 
 
 
-
-    public Cookie generateToken(AuthRequest authRequest) {
+    //creating token
+    public Cookie generateToken(AuthRequest authRequest,HttpServletRequest request) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getEmail());
 
         Map<String, Object> claims = new HashMap<>();
@@ -60,13 +61,12 @@ public class JwtService {
         claims.put("userId", ((MyUserDetails) userDetails).getId());
 
         String jwtToken=buildToken(claims, userDetails.getUsername());
-
+        System.out.println("generated cookie:"+jwtToken);
         Cookie cookie = new Cookie("token", jwtToken);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        cookie.setSecure(request.isSecure());
         cookie.setPath("/");
         cookie.setMaxAge(3600);
-        cookie.setAttribute("SameSite", "Strict");
         return cookie;
     }
 
@@ -84,10 +84,13 @@ public class JwtService {
                 .compact();
 
     }
-    private SecretKey getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(this.secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
+
+    //Claim Extraction
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -111,15 +114,16 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    //algo for jwt encoding
+    private SecretKey getSignInKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(this.secretKey);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
 
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
 
 
 

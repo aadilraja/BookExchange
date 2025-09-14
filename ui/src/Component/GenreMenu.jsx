@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronDown, X } from 'lucide-react';
-
 const categoryGenreMap = {
   "Fiction": [
     "Mystery", "Thriller", "Science Fiction", "Fantasy", "Horror", "Romance",
@@ -35,30 +34,17 @@ const categoryGenreMap = {
   ]
 };
 
-export default function GenreMenu({ selectedGenres = [], onGenresChange, selectedCategory }) {
+function GenreMenu({ selectedGenres = [], onGenresChange, selectedCategory }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItems, setSelectedItems] = useState(selectedGenres);
   const [searchTerm, setSearchTerm] = useState('');
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
-
-  // Sync with parent component
-  useEffect(() => {
-    setSelectedItems(selectedGenres);
-  }, [selectedGenres]);
-
-  // Notify parent when selection changes
-  useEffect(() => {
-    if (onGenresChange) {
-      onGenresChange(selectedItems);
-    }
-  }, [selectedItems, onGenresChange]);
 
   const options = selectedCategory ? categoryGenreMap[selectedCategory] || [] : [];
 
   const filteredOptions = options.filter(option =>
     option.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    !selectedItems.includes(option)
+    !selectedGenres.includes(option)
   );
 
   // Handle clicking outside to close dropdown
@@ -66,6 +52,7 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        setSearchTerm('');
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -73,18 +60,22 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
   }, []);
 
   const handleInputClick = () => {
-    setIsOpen(true);
-    inputRef.current?.focus();
+    if (selectedCategory) {
+      setIsOpen(true);
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
   };
 
   const handleOptionClick = (option) => {
-    setSelectedItems(prev => [...prev, option]);
+    const newItems = [...selectedGenres, option];
+    onGenresChange(newItems);
     setSearchTerm('');
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   const removeSelectedItem = (itemToRemove) => {
-    setSelectedItems(prev => prev.filter(item => item !== itemToRemove));
+    const newItems = selectedGenres.filter(item => item !== itemToRemove);
+    onGenresChange(newItems);
   };
 
   const handleInputChange = (e) => {
@@ -93,22 +84,34 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Backspace' && searchTerm === '' && selectedItems.length > 0) {
-      removeSelectedItem(selectedItems[selectedItems.length - 1]);
+    if (e.key === 'Backspace' && searchTerm === '' && selectedGenres.length > 0) {
+      removeSelectedItem(selectedGenres[selectedGenres.length - 1]);
+    }
+    if (e.key === 'Escape') {
+      setIsOpen(false);
+      setSearchTerm('');
+      inputRef.current?.blur();
     }
   };
 
   const getDisplayText = () => {
-    if (searchTerm) return searchTerm;
-    if (selectedItems.length === 0) return '';
-    if (selectedItems.length === 1) return selectedItems[0];
-    return `${selectedItems.length} genres selected`;
+    if (isOpen && searchTerm) return searchTerm;
+    if (!isOpen && selectedGenres.length === 0) return '';
+    if (!isOpen && selectedGenres.length === 1) return selectedGenres[0];
+    if (!isOpen && selectedGenres.length > 1) return `${selectedGenres.length} genres selected`;
+    return searchTerm;
   };
 
   const getPlaceholder = () => {
     if (!selectedCategory) return "Select a category first...";
-    if (selectedItems.length === 0) return "Search and Select Genres...";
-    return "";
+    if (selectedGenres.length === 0) return "Search and select genres...";
+    return "Search for more genres...";
+  };
+
+  const clearAll = (e) => {
+    e.stopPropagation();
+    onGenresChange([]);
+    setSearchTerm('');
   };
 
   return (
@@ -118,13 +121,41 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
         <div 
           className={`
             min-h-12 w-full border-2 rounded-lg px-3 py-2 cursor-text
-            flex items-center 
+            flex items-center flex-wrap gap-1
             ${isOpen ? 'border-blue-500 ring-2 ring-blue-200' : 'border-gray-300 hover:border-gray-400'}
             transition-all duration-200
-            ${!selectedCategory ? 'bg-gray-100 cursor-not-allowed' : ''}
+            ${!selectedCategory ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}
           `}
-          onClick={selectedCategory ? handleInputClick : undefined}
+          onClick={handleInputClick}
         >
+          {/* Show selected genres as tags when not searching */}
+          {!isOpen && selectedGenres.length > 0 && (
+            <div className="flex flex-wrap gap-1 mr-2">
+              {selectedGenres.slice(0, 3).map((genre, index) => (
+                <span 
+                  key={index}
+                  className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm font-medium"
+                >
+                  {genre}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeSelectedItem(genre);
+                    }}
+                    className="hover:bg-blue-200 rounded p-0.5 transition-colors"
+                  >
+                    <X size={12} />
+                  </button>
+                </span>
+              ))}
+              {selectedGenres.length > 3 && (
+                <span className="text-gray-500 text-sm">
+                  +{selectedGenres.length - 3} more
+                </span>
+              )}
+            </div>
+          )}
+          
           {/* Search input */}
           <input
             ref={inputRef}
@@ -132,20 +163,18 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
             value={getDisplayText()}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
+            onFocus={() => selectedCategory && setIsOpen(true)}
             placeholder={getPlaceholder()}
-            className="flex-1 outline-none bg-transparent text-gray-700 placeholder-gray-400"
-            readOnly={!selectedCategory || (selectedItems.length > 1 && !searchTerm)}
+            className="flex-1 min-w-0 outline-none bg-transparent text-gray-700 placeholder-gray-400"
             disabled={!selectedCategory}
           />
           
-          {/* Clear button */}
-          {selectedItems.length > 0 && !searchTerm && (
+          {/* Clear all button */}
+          {selectedGenres.length > 0 && !isOpen && (
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedItems([]);
-              }}
-              className="mr-2 hover:bg-gray-100 rounded p-1 transition-colors"
+              onClick={clearAll}
+              className="ml-2 hover:bg-gray-100 rounded p-1 transition-colors"
+              title="Clear all selections"
             >
               <X size={16} className="text-gray-400" />
             </button>
@@ -155,20 +184,22 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
           {selectedCategory && (
             <ChevronDown 
               size={20} 
-              className={`text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+              className={`text-gray-400 transition-transform duration-200 ml-2 ${isOpen ? 'rotate-180' : ''}`}
             />
           )}
         </div>
 
         {/* Dropdown menu */}
         {isOpen && selectedCategory && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300
-           rounded-lg shadow-lg max-h-60 overflow-y-auto">
-            {selectedItems.length > 0 && !searchTerm && (
+          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+            {/* Show selected genres in dropdown when searching */}
+            {selectedGenres.length > 0 && (
               <div className="px-3 py-2 bg-gray-50 border-b border-gray-200">
-                <div className="text-xs font-medium text-gray-600 mb-2">Selected Genres:</div>
+                <div className="text-xs font-medium text-gray-600 mb-2">
+                  Selected ({selectedGenres.length}):
+                </div>
                 <div className="flex flex-wrap gap-1">
-                  {selectedItems.map((item, index) => (
+                  {selectedGenres.map((item, index) => (
                     <span 
                       key={index}
                       className="inline-flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium"
@@ -189,6 +220,7 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
               </div>
             )}
 
+            {/* Available options */}
             {filteredOptions.length > 0 ? (
               filteredOptions.map((option, index) => (
                 <div
@@ -201,7 +233,7 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
               ))
             ) : (
               <div className="px-3 py-2 text-gray-500 italic">
-                {searchTerm ? 'No matching options found' : 'No more options available'}
+                {searchTerm ? 'No matching genres found' : 'No more genres available'}
               </div>
             )}
           </div>
@@ -210,3 +242,5 @@ export default function GenreMenu({ selectedGenres = [], onGenresChange, selecte
     </div>
   );
 }
+ 
+export default GenreMenu;

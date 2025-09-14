@@ -18,11 +18,13 @@ public class BookMapper {
 
     private final GenreMapper genreMapper;
     private final GenreRepo genreRepo;
+    private final UserMapper userMapper;
 
 @Autowired
-  public BookMapper(GenreMapper genreMapper, GenreRepo genreRepo) {
+  public BookMapper(GenreMapper genreMapper, GenreRepo genreRepo, UserMapper userMapper) {
         this.genreMapper = genreMapper;
         this.genreRepo = genreRepo;
+        this.userMapper = userMapper;
     }
 
 
@@ -38,6 +40,7 @@ public class BookMapper {
         dto.setImageUrl(book.getImageUrl());
         dto.setImagePath(book.getImagePath());
         dto.setType(book.getType());
+        dto.setUser(userMapper.toDto(book.getUser()));
         dto.setGenres(
                 book.getGenres().stream()
                         .map(genreMapper::toDto)

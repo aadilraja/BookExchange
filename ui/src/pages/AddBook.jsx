@@ -1,7 +1,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import axios from 'axios';
-import CategoryMenu from '../Component/CategoryMenu';
+import SearchableDropdown from '../Component/SearchableDropdown';
 import GenreMenu from '../Component/GenreMenu';
+import {bookCategories, bookTypes} from '../data/DropDownOption';
 import { Upload, X } from 'lucide-react';
 
 const AddBook = () => {
@@ -21,31 +22,25 @@ const AddBook = () => {
         title: "",
         author: "",
         category: "",
+        type:"",
         genres: []
     });
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+    const handleChange = (field, value) => {
+    setBook(prev => ({
+        ...prev,
+        [field]: value
+    }));
+        };
+
+   
+
+    const handleGenresChange = (selectedGenres) => {
         setBook(prev => ({
             ...prev,
-            [name]: value
+            genres: selectedGenres 
         }));
     };
-
-    const handleCategoryChange = useCallback((selectedCategory) => {
-        setBook(prev => ({
-            ...prev,
-            category: selectedCategory
-        }));
-    }, []); 
-
-    const handleGenresChange = useCallback((selectedGenres) => {
-        setBook(prev => ({
-            ...prev,
-            genres: selectedGenres
-        }));
-    }, []); 
-
     function CreateForm(book,img)
     {
         const formData = new FormData();
@@ -64,7 +59,7 @@ const AddBook = () => {
                     headers: {
                         "Content-Type": "multipart/form-data"
                     },
-                                    withCredentials:'true'
+                                    withCredentials: true
             }
             );
             console.log('Book added successfully:', response.data);
@@ -218,7 +213,7 @@ const AddBook = () => {
                                     id="title" 
                                     name="title"
                                     value={book.title}
-                                    onChange={handleInputChange}
+                                   onChange={(e) => handleChange('title', e.target.value)}
                                     required 
                                 />                  
                             </div>
@@ -233,8 +228,18 @@ const AddBook = () => {
                                     id="author" 
                                     name="author"
                                     value={book.author}
-                                    onChange={handleInputChange}
+                                    onChange={(e) => handleChange('author', e.target.value)}
                                     required 
+                                />
+                            </div>
+                            <div>
+                                <label className='block text-sm font-medium text-gray-700 mb-2'>
+                                    Type
+                                </label>
+                                <SearchableDropdown
+                                    options={bookTypes}
+                                    selectedValue={book.type}
+                                    onValueChange={(value)=>handleChange('type',value)}
                                 />
                             </div>
 
@@ -242,9 +247,10 @@ const AddBook = () => {
                                 <label className="block text-sm font-medium text-gray-700 mb-2">
                                     Category
                                 </label>
-                                <CategoryMenu 
-                                    selectedCategory={book.category}
-                                    onCategoryChange={handleCategoryChange}
+                               <SearchableDropdown 
+                                    options={bookCategories}
+                                    selectedValue={book.category}
+                                    onValueChange={(value) => handleChange('category', value)}
                                 />
                             </div>
 
