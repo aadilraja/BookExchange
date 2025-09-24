@@ -91,14 +91,7 @@ public class AuthController
         );
 
         final Cookie token = jwtService.generateToken(authRequest,request);
-        System.out.println("=== COOKIE DEBUG ===");
-        System.out.println("Cookie Name: " + token.getName());
-        System.out.println("Cookie Value: " + token.getValue());
-        System.out.println("Cookie Path: " + token.getPath());
-        System.out.println("Cookie Secure: " + token.getSecure());
-        System.out.println("Cookie HttpOnly: " + token.isHttpOnly());
-        System.out.println("Cookie MaxAge: " + token.getMaxAge());
-        System.out.println("===================");
+
 
         response.addCookie(token);
 

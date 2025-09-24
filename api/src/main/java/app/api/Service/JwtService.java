@@ -66,7 +66,7 @@ public class JwtService {
         cookie.setHttpOnly(true);
         cookie.setSecure(request.isSecure());
         cookie.setPath("/");
-        cookie.setMaxAge(3600);
+        cookie.setMaxAge(86400);
         return cookie;
     }
 

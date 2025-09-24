@@ -3,8 +3,6 @@ package app.api.Controller;
 import app.api.Persistence.DTOS.Responses.SuccessResponse;
 import app.api.Persistence.DTOS.BookDTO;
 import app.api.Service.BookService;
-import app.api.Service.JwtService;
-import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +39,7 @@ public class BookController {
     {
 
          BookDTO bookdto =  bookService.persist(bookDTO,coverImg,request);
-         String successMessage="success.book.created";
-         String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+         String responseMsg=createResponseMsg("success.book.created");
 
 
          return ResponseEntity.status(HttpStatus.CREATED)
@@ -54,8 +51,7 @@ public class BookController {
     ResponseEntity<SuccessResponse<List<BookDTO>>> getAllBooks()
     {
         List<BookDTO> books=bookService.getAllBooks();
-        String successMessage="message.book.retrieved";
-        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        String responseMsg=createResponseMsg("message.book.retrieved");
 
         return ResponseEntity.ok(new SuccessResponse<>(responseMsg, books));
 
@@ -64,8 +60,8 @@ public class BookController {
     ResponseEntity<SuccessResponse<BookDTO>>getBookById(@PathVariable("id") Long id)
     {
         BookDTO bookDTO=bookService.getBookById(id);
-        String successMessage="message.book.retrieved.id";
-        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        String responseMsg=createResponseMsg("message.book.retrieved.id");
+
         return ResponseEntity.ok(new SuccessResponse<>(responseMsg, bookDTO));
 
     }
@@ -77,16 +73,22 @@ public class BookController {
 
     {
         BookDTO bookDto=bookService.updateBookById(id,bookDTO,coverImg);
-        String successMessage="message.book.updated";
-        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        String responseMsg=createResponseMsg("message.book.updated");
+
         return ResponseEntity.ok(new SuccessResponse<>(responseMsg, bookDto));
     }
     @DeleteMapping("/{id}")
     ResponseEntity<SuccessResponse<?>>deleteBookById(@PathVariable("id") Long id) throws IOException {
         bookService.deleteBookById(id);
-        String successMessage="message.book.deleted";
-        String responseMsg=msg.getMessage(successMessage,null, LocaleContextHolder.getLocale());
+        String responseMsg=createResponseMsg("message.book.deleted");
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new SuccessResponse<>(responseMsg));
+
+    }
+
+
+    private String createResponseMsg(String message)
+    {
+        return msg.getMessage(message,null,LocaleContextHolder.getLocale());
 
     }
 

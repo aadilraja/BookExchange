@@ -6,12 +6,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "book")
-public class Book {
+public class Book extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "book_id", nullable = false)
-    private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
@@ -51,7 +48,8 @@ public class Book {
     }
 
     // Constructor with basic fields
-    public Book(String title, String author, String category, String imageUrl,String imagePath,String type) {
+    public Book(String title, String author, String category,
+                String imageUrl,String imagePath,String type) {
         this.title = title;
         this.author = author;
         this.category = category;
