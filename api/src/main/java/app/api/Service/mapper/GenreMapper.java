@@ -16,6 +16,8 @@ public class GenreMapper {
         GenreDTO dto = new GenreDTO();
         dto.setId(genre.getId());
         dto.setName(genre.getName());
+        dto.setCreatedAt(genre.getCreatedAt());
+        dto.setUpdatedAt(genre.getUpdatedAt());
         return dto;
     }
 
@@ -23,7 +25,6 @@ public class GenreMapper {
         if (dto == null) return null;
 
         Genre genre = new Genre();
-        genre.setId(dto.getId());  // optional — skip this if ID is DB-generated
         genre.setName(dto.getName());
         return genre;
     }

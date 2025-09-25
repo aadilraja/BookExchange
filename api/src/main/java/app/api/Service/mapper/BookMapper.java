@@ -33,7 +33,45 @@ public class BookMapper {
         if(book == null)
             return null;
         BookDTO dto = new BookDTO();
+
+        mapBookToBookDTO(book, dto);
+
+        return dto;
+
+    }
+
+   public Book toEntity(BookDTO bookDto)
+    {
+        if(bookDto == null)
+            return null;
+        Book book = new Book();
+        mapBookDtoToBook(bookDto,book);
+        return book;
+
+    }
+    public void updateEntityFromDto(Book existingBook, BookDTO bookDto) {
+        mapBookDtoToBook(bookDto,existingBook);
+    }
+
+
+
+    private void mapBookDtoToBook(BookDTO bookDto,Book book) {
+        book.setAuthor(bookDto.getAuthor());
+        book.setTitle(bookDto.getTitle());
+        book.setCategory(bookDto.getCategory());
+        book.setType(bookDto.getType());
+
+        if (bookDto.getGenres() != null) {
+            bookDto.getGenres().stream()
+                    .map(genre -> genreRepo.findByName(genre.getName())
+                            .orElseGet(() -> new Genre(genre.getName())))
+                    .forEach(book::addGenre);
+        }
+    }
+    private void mapBookToBookDTO(Book book,BookDTO dto) {
         dto.setId(book.getId());
+        dto.setCreatedAt(book.getCreatedAt());
+        dto.setUpdatedAt(book.getUpdatedAt());
         dto.setAuthor(book.getAuthor());
         dto.setTitle(book.getTitle());
         dto.setCategory(book.getCategory());
@@ -46,48 +84,5 @@ public class BookMapper {
                         .map(genreMapper::toDto)
                         .collect(Collectors.toSet())
         );
-
-        return dto;
-
-    }
-
-   public Book toEntity(BookDTO bookDto)
-    {
-        if(bookDto == null)
-            return null;
-        Book book = new Book();
-        book.setAuthor(bookDto.getAuthor());
-        book.setTitle(bookDto.getTitle());
-        book.setCategory(bookDto.getCategory());
-        book.setType(bookDto.getType());
-
-        if (bookDto.getGenres() != null) {
-            bookDto.getGenres().stream()
-                    .map(genre -> genreRepo.findByName(genre.getName())
-                            .orElseGet(() -> new Genre(genre.getName())))
-                    .forEach(book::addGenre);
-        }
-
-
-        return book;
-
-
-    }
-
-
-    public void updateEntityFromDto(Book existingBook, BookDTO bookDto) {
-        existingBook.setAuthor(bookDto.getAuthor());
-        existingBook.setTitle(bookDto.getTitle());
-        existingBook.setCategory(bookDto.getCategory());
-        existingBook.setType(bookDto.getType());
-
-        if (bookDto.getGenres() != null) {
-            bookDto.getGenres().stream()
-                    .map(genre -> genreRepo.findByName(genre.getName())
-                            .orElseGet(() -> new Genre(genre.getName())))
-                    .forEach(existingBook::addGenre);
-        }
-
-
     }
 }

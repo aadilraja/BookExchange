@@ -1,6 +1,6 @@
 package app.api.Persistence.DTOS;
 
-public class GenreDTO {
+public class GenreDTO extends BaseDtoAudit {
     private Long id;
     private String name;
 

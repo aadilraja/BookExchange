@@ -7,7 +7,7 @@ import jakarta.validation.constraints.*;
 import java.util.Set;
 
 @PasswordMatches
-public class UserCreateDto {
+public class UserCreateDto extends BaseDtoAudit {
     @NotBlank
     @Size(max=50)
     @ValidEmail

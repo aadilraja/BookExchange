@@ -4,22 +4,19 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="role")
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Integer id;
+public class Role extends BaseEntityAudit {
+
 
     @Enumerated(EnumType.STRING)
     @Column(name="name",length = 20)
     private ERole name;
 
 
-    public Role() {}
+    public Role() {
+        super();
+    }
     public Role(ERole name) {
         this.name = name;
-    }
-    public int getId() {
-        return id;
     }
     public ERole getName()
     {

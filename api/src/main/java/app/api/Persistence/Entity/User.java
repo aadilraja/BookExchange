@@ -10,11 +10,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "userId")
-    private Long id;
+public class User extends BaseEntityAudit {
+
 
     @Column(name="email",nullable = false, unique = true)
     private String email;
@@ -48,24 +45,23 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles=new HashSet<>();
 
-    @Column(name="createdAt")
-    private LocalDateTime createdAt;
-    @Column(name="updatedAt")
-    private LocalDateTime updatedAt;
 
 
 
-    public User() {}
+
+    public User() {
+        super();
+    }
+
     public User(String email, String name,String password, String profileImageUrl,
-                boolean isEmailVerified, LocalDateTime createdAt, LocalDateTime updatedAt)
+                boolean isEmailVerified)
     {
         this.email = email;
         this.name = name;
         this.password = password;
 //        this.profileImageUrl = profileImageUrl;
         this.isEmailVerified = isEmailVerified;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+
 
     }
 
@@ -77,13 +73,7 @@ public class User {
         this.books = books;
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -130,25 +120,6 @@ public class User {
         isEmailVerified = emailVerified;
     }
 
-
-
-
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
     public void addBook(Book book) {
         this.books.add(book);
         book.setUser(this);

@@ -3,7 +3,7 @@ package app.api.Persistence.DTOS;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-public class UserDto {
+public class UserDto extends BaseDtoAudit {
     private Long id;
     private String email;
     private String name;

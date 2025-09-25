@@ -6,7 +6,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "book")
-public class Book extends BaseEntity {
+public class Book extends BaseEntityAudit {
 
 
 
@@ -45,6 +45,7 @@ public class Book extends BaseEntity {
 
     // Default constructor
     public Book() {
+        super();
     }
 
     // Constructor with basic fields
@@ -59,13 +60,7 @@ public class Book extends BaseEntity {
     }
 
     // Getters and Setters
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
      public User getUser() {
          return user;

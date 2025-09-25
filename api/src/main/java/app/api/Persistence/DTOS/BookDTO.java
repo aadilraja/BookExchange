@@ -3,7 +3,7 @@ package app.api.Persistence.DTOS;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BookDTO {
+public class BookDTO extends BaseDtoAudit {
 
     private Long id;
     private UserDto user;

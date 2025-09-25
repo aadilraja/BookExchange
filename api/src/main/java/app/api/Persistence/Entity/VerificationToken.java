@@ -5,13 +5,9 @@ import java.util.Date;
 import jakarta.persistence.*;
 
 @Entity
-public class VerificationToken {
+public class VerificationToken extends BaseEntityAudit {
 
     private static final int EXPIRATION = 60 * 24;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
 
     private String token;
 
@@ -40,9 +36,7 @@ public class VerificationToken {
         this.expiryDate = calculateExpiryDate();
     }
 
-    public Long getId() {
-        return id;
-    }
+
 
     public String getToken() {
         return token;
@@ -80,7 +74,6 @@ public class VerificationToken {
         this.expiryDate = calculateExpiryDate();
     }
 
-    //
 
     @Override
     public int hashCode() {
