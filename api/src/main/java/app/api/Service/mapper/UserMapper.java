@@ -32,15 +32,15 @@ public class UserMapper {
              return null;
          }
         User user = new User();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(encodePassword(dto.getPassword()));
-        user.setEmailVerified(false);
-        user.setRoles(convertStringToRoles(dto.getRole()));
+
+         mapDtoToEntity(user,dto);
 
         return user;
 
     }
+
+
+
     public UserDto toDto(User user) {
          if(user == null) {
              return null;
@@ -56,6 +56,15 @@ public class UserMapper {
 
 
          return userDto;
+
+    }
+
+    public void updateExistingUser(User user,UserCreateDto dto) {
+         if(user == null ||dto==null) {
+             return;
+         }
+         mapDtoToEntity(user,dto);
+
 
     }
     private Set<String> convertRolesToString(Set<Role> roles) {
@@ -74,6 +83,13 @@ public class UserMapper {
     }
     private String encodePassword(String password) {
          return passwordEncoder.encode(password);
+    }
+    private void mapDtoToEntity(User user, UserCreateDto dto) {
+        user.setName(dto.getName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(encodePassword(dto.getPassword()));
+        user.setEmailVerified(false);
+        user.setRoles(convertStringToRoles(dto.getRole()));
     }
 
 }

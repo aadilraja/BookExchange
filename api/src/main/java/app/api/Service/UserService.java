@@ -8,10 +8,13 @@ import app.api.Persistence.Entity.VerificationToken;
 import app.api.Persistence.Repo.UserRepo;
 import app.api.Persistence.Repo.VerificationTokenRepo;
 import app.api.Service.mapper.UserMapper;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.Cookie;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,16 +50,7 @@ public class UserService implements IUserService {
          return user;
 
     }
-    public User findUserById(Long id)
-    {
-     return userRepo.findById(id).orElse(null);
-    }
 
-
-    private boolean EmailExist(String email) {
-        return userRepo.findByEmail(email)!=null;
-
-    }
    @Override
     public void createVerificationToken(User user, String token) {
         VerificationToken verificationToken = new VerificationToken(token, user);
@@ -89,7 +83,52 @@ public class UserService implements IUserService {
         return cookie;
     }
 
+    @Override
+    public List<UserDto> getAllUsers()
+    {
+        List<User> users=userRepo.findAll();
 
+        List<UserDto> userDtos=users.stream()
+                                    .map(userMapper::toDto)
+                                    .toList();
+        return userDtos;
+    }
+    @Override
+    public UserDto getUserById(Long id)
+    {
+        User user=findUserById(id);
+
+
+        return userMapper.toDto(user);
+
+    }
+    @Override
+    public UserDto updateUser(Long id, UserCreateDto userDto)
+    {
+        User user=findUserById(id);
+
+        userMapper.updateExistingUser(user,userDto);
+        if(user == null || user.getEmail() == null) {
+            throw new IllegalArgumentException("Invalid user data: mapping failed or email is missing");
+        }
+        user=userRepo.save(user);
+        return userMapper.toDto(user);
+
+
+    }
+
+
+
+    public User findUserById(Long id)
+    {
+        return userRepo.findById(id).orElseThrow(()->new EntityNotFoundException("User with id " + id+" not found"));
+    }
+
+
+    private boolean EmailExist(String email) {
+        return userRepo.findByEmail(email)!=null;
+
+    }
     private Optional<VerificationToken> getVerificationToken(String token) {
         return tokenRepo.findByToken(token);
     }

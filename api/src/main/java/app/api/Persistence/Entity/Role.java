@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="role")
-public class Role extends BaseEntityAudit {
+public class Role extends BaseEntity {
 
 
     @Enumerated(EnumType.STRING)

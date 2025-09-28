@@ -6,6 +6,8 @@ import app.api.Persistence.Entity.User;
 import app.api.Persistence.Entity.VerificationToken;
 import jakarta.servlet.http.Cookie;
 
+import java.util.List;
+
 public interface IUserService {
     User persistUser(UserCreateDto request);
    void createVerificationToken(User user, String token);
@@ -15,4 +17,10 @@ public interface IUserService {
     UserDto verifyToken(String token);
 
     Cookie generateLogoutCookie();
+
+    List<UserDto> getAllUsers();
+
+    UserDto getUserById(Long id);
+
+    UserDto updateUser(Long id, UserCreateDto userDto);
 }

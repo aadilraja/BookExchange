@@ -19,15 +19,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
-public class BookController {
+public class BookController extends BaseController {
 
   private final BookService bookService;
- private final  MessageSource msg;
 
     @Autowired
-    public BookController(BookService bookService, MessageSource msg) {
+    public BookController(MessageSource msg,BookService bookService) {
+        super(msg);
         this.bookService = bookService;
-        this.msg = msg;
+
     }
 
 
@@ -86,11 +86,7 @@ public class BookController {
     }
 
 
-    private String createResponseMsg(String message)
-    {
-        return msg.getMessage(message,null,LocaleContextHolder.getLocale());
 
-    }
 
 
 }
