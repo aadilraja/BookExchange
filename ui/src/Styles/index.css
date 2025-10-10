@@ -1,6 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
 @import "tailwindcss";
+
+
+@theme {
+    --font-caveat: "Caveat", cursive;
+    --font-robotoSerif: "Roboto Serif", serif;
+    --font-roboto: "Roboto", sans-serif;
+}
 
 body {
     background-color: #F1E7DB;
-    cursor: url('data:image/svg+xml;utf8,<svg width="18" height="18" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g transform="rotate(-40 16 16)"><path d="M16 2 L28 28 L16 22 L4 28 Z" fill="%231a1a1a"/></g></svg>') 16 16, auto;
 }
+main
+{
+  background-image: url('/src/assets/image.png');
+    background-size: cover; 
+    background-position:top;
+    background-repeat: repeat;
+
+}
+
+body, a, button {
+cursor: url('data:image/svg+xml;utf8,<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="%23000000" flood-opacity="0.3"/></filter></defs><g transform="rotate(-40 16 16)" filter="url(%23shadow)"><path d="M16 2 L28 28 L16 22 L4 28 Z" fill="%231a1a1a" stroke="%23ffffff" stroke-width="1.5"/></g></svg>') 16 16, auto !important;
+}
+
+h1,nav {
+  font-family: "Roboto", sans-serif;
+}
+

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpg'
 
 export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);

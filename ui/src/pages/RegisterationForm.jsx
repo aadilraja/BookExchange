@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
 import {CheckCircle} from 'lucide-react';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.jpg'
 
 const RegistrationForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
