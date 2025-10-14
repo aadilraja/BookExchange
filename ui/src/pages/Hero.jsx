@@ -10,6 +10,8 @@ import logo from '../assets/logo.jpg'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cat from '../Component/Cat'
+import '../Styles/App.css'
 
 
 
@@ -84,7 +86,8 @@ export default function Hero() {
             <button className='bg-[#1A1A1A] text-white h-[60px] 
                                 px-8 py-4 rounded-[45px] text-[26px] 
                                 font-roboto font-semibold flex items-center mr-28
-                                gap-3 transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95'
+                                gap-3'
+                                id='shine-button'
                                 onClick={() => setTimeout(()=>navigate('/users/new'),1000)}
                                 >
               Get Started 
@@ -122,7 +125,10 @@ export default function Hero() {
           </div>
         </div>  
         {/* Right Side */}
-        <div className=' flex-1'>
+        <div className=' flex-1 flex justify-center items-center h-[100%]'>
+
+
+            <Cat/>
           
 
         </div>
