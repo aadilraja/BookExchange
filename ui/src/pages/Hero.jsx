@@ -48,8 +48,9 @@ export default function Hero() {
               <li>
                   <button
                     className="bg-amber-600 text-white px-5 py-2 rounded-full 
-                    font-semibold hover:bg-white hover:text-black transition-all duration-200"
-                    onClick={()=>setTimeout(()=>navigate('/users/login'),1000)}
+                    font-semibold hover:bg-white hover:text-black hover:animate-none hover:scale-110 
+                     active:bg-amber-600 active:scale-90 transition-all duration-200  "
+                    onClick={()=>setTimeout(()=>navigate('/users/login'),300)}
                   >
                     Login
                   </button>
@@ -83,16 +84,16 @@ export default function Hero() {
 
             {/* CTA Button */}
           <div className='flex justify-center items-center px-6'>
-            <button className='bg-[#1A1A1A] text-white h-[60px] 
-                                px-8 py-4 rounded-[45px] text-[26px] 
-                                font-roboto font-semibold flex items-center mr-28
-                                gap-3'
-                                id='shine-button'
-                                onClick={() => setTimeout(()=>navigate('/users/new'),1000)}
-                                >
-              Get Started 
-              <ArrowForwardIosIcon className='text-[26px]'/>
-            </button>
+          <button className='group bg-[#1A1A1A] text-white h-[60px] 
+                            px-8 py-4 rounded-[45px] text-[26px]
+                            font-roboto font-semibold flex items-center mr-28
+                            gap-3  active:scale-95  transition-all duration-300  '
+                            id='shine-button'
+                            onClick={() => setTimeout(()=>navigate('/users/new'),300)}
+                            >
+                <span className='group-hover:-translate-x-0.5  transition-transform duration-300 '>Get Started</span> 
+                <ArrowForwardIosIcon className='text-[26px] group-hover:translate-x-2 group-hover:scale-115 transition-all duration-300'/>
+          </button>
           </div>
           {/* badges */}
           <div className='flex flex-row justify-evenly mx-6 mt-2 font-roboto '>
