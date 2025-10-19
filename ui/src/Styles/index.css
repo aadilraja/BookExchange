@@ -9,6 +9,8 @@
     --font-robotoSerif: "Roboto Serif", serif;
     --font-roboto: "Roboto", sans-serif;
     --animate-tada: tada 1s ease-in-out infinite ;
+
+
     @keyframes tada {
       from {
         transform: scale3d(1, 1, 1);
@@ -36,15 +38,16 @@
 
 body {
     background-color: #F1E7DB;
+  
 }
 main
 {
-  background-image: url('/src/assets/image.png');
+    background-image: url('/src/assets/image.png');
     background-size: cover; 
     background-position:top;
     background-repeat: repeat;
-
 }
+
 
 body, a, button {
 cursor: url('data:image/svg+xml;utf8,<svg width="26" height="26" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><defs><filter id="shadow"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="%23000000" flood-opacity="0.3"/></filter></defs><g transform="rotate(-40 16 16)" filter="url(%23shadow)"><path d="M16 2 L28 28 L16 22 L4 28 Z" fill="%231a1a1a" stroke="%23ffffff" stroke-width="1.5"/></g></svg>') 16 16, auto !important;

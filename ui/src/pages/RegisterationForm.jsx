@@ -79,7 +79,7 @@ const RegistrationForm = () => {
 
     // Original registration form
     return (
-        <div className="bg-gray-100 min-h-screen flex justify-center items-center font-sans">
+        <div className="min-h-screen flex justify-center items-center font-sans">
             <div className='bg-white p-2 rounded-xl shadow-lg w-full max-w-md '>
                 <div className='w-[165px] h-[165px] rounded-full mx-auto'>
                     <img src={logo} alt='logo' className="w-full h-full object-contain" />

@@ -1,3 +1,5 @@
+//todo:add coffee mug, open book on top
+
 import { useEffect, useState, useRef } from "react";
 
 export default function Cat() {
@@ -156,76 +158,103 @@ function resetIdleTimer(eyes) {
         <ellipse cx="250" cy="258" rx="14" ry="10" fill="#BB897D" />
 
         </g>
-        <g id="books" >
-            <g className="book">
-            {/* Book spine (left side) */}
-            <polygon 
-              points="105,454 105,414 245,459 245,500" 
-              fill="#8B4513" 
-              stroke="#333" 
-              strokeWidth="1.5" 
-            />
-
-            {/* Book top */}
-            <polygon 
-              points="105,414 180,389 320,436 245,459" 
-              fill="#D2691E" 
-              stroke="#333" 
-              strokeWidth="1.5" 
-            />
-
-            {/* Book pages (right side) with page lines */}
-            <polygon 
-              points="245,459 320,436 320,476 245,500" 
-              fill="#FFFEF0" 
-              stroke="#333" 
-              strokeWidth="1.5" 
-            />
-            
-        <line x1="310" y1="446" x2="255" y2="465" stroke="black" strokeWidth="1.5"/>
-        <line x1="320" y1="455" x2="255" y2="475" stroke="black" strokeWidth="1.5"/>
-        <line x1="305" y1="467" x2="270" y2="480" stroke="black" strokeWidth="1.5"/>
-        <line x1="315" y1="470" x2="260" y2="490" stroke="black" strokeWidth="1.5"/>
-
-
-            
-          </g>
-          <g className="book-top">
-              {/* Book spine (front facing) */}
-              <polygon 
-                points="130,380 130,360 205,335 205,355" 
-                fill="#5A7D5A" 
-                stroke="#333" 
-                strokeWidth="1.5" 
-              />
-              
-              {/* Book top */}
-              <polygon 
-                points="130,360 205,335 280,360 205,385" 
-                fill="#7BA67B" 
-                stroke="#333" 
-                strokeWidth="1.5" 
-              />
-
-            {/* Book pages (right side) */}
-            <polygon 
-              points="205,355 280,360 280,380 205,385" 
-              fill="#FFFEF0" 
-              stroke="#333" 
-              strokeWidth="1.5" 
-            />
-            
-            {/* Page lines on the right edge */}
-            <line x1="280" y1="362" x2="210" y2="357" stroke="black" strokeWidth="1.5"/>
-            <line x1="280" y1="365" x2="220" y2="361" stroke="black" strokeWidth="1.5"/>
-            <line x1="280" y1="368" x2="215" y2="364" stroke="black" strokeWidth="1.5"/>
-            <line x1="280" y1="372" x2="225" y2="368" stroke="black" strokeWidth="1.5"/>
-            <line x1="280" y1="376" x2="218" y2="372" stroke="black" strokeWidth="1.5"/>
-          </g>
-
+  
+        <g class="book-1-bottom">
+          <polygon 
+            points="105,464 105,444 245,464 245,488" 
+            fill="#F06292" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <polygon 
+            points="105,444 180,434 325,457 245,464" 
+            fill="#E91E63" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <polygon 
+            points="245,464 325,457 325,478 245,488" 
+            fill="#FFFEF0" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <line x1="310" y1="462" x2="255" y2="468" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" stroke-width="1"/>
+          
+          <polygon 
+            points="120,462 120,452 230,470 230,480" 
+            fill="#F8BBD0" 
+            stroke="#333" 
+            stroke-width="1"
+          />
         </g>
 
-      </svg>
+        <g class="book-2-middle" transform="translate(-10, -24)">
+          <polygon 
+            points="105,464 105,444 245,464 245,488" 
+            fill="#FFEB3B" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <polygon 
+            points="105,444 180,434 325,457 245,464" 
+            fill="#FDD835" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <polygon 
+            points="245,464 325,457 325,478 245,488" 
+            fill="#FFFEF0" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <line x1="310" y1="460" x2="255" y2="469" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" stroke-width="1"/>
+           <polygon 
+            points="120,462 120,452 230,470 230,480" 
+            fill="#eada67" 
+            stroke="#333" 
+            stroke-width="1"
+          />
+        </g>
+
+        <g class="book-3-top" transform="translate(5, -48)">
+          <polygon 
+            points="105,464 105,444 245,464 245,488" 
+            fill="#64B5F6" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <polygon 
+            points="105,444 180,434 325,457 245,464" 
+            fill="#42A5F5" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <polygon 
+            points="245,464 325,457 325,478 245,488" 
+            fill="#FFFEF0" 
+            stroke="#333" 
+            stroke-width="1.5" 
+          />
+          <line x1="310" y1="460" x2="255" y2="469" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" stroke-width="1"/>
+          <polygon 
+            points="120,462 120,452 230,470 230,480" 
+            fill="#5b9fd6" 
+            stroke="#333" 
+            stroke-width="1"
+          />
+          
+          
+        </g>
+
+</svg>
+         
+
     </>
   );
 }
