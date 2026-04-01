@@ -7,3 +7,4 @@ A peer-to-peer book exchange web application built with Spring Boot and React. T
 
 ### High-Level Data Flow
 
+![img](https://i.ibb.co/0Vfy1JhF/diagram-export-4-1-2026-1-39-57-PM.png)
