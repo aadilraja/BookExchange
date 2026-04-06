@@ -94,7 +94,7 @@ const ConfirmRegisteration = () => {
               <button className="text-white flex items-center justify-center bg-green-600 rounded-[10px] w-[265px] h-[60px] p-2 text-[18px] 
                                   hover:scale-105 transition-all duration-500 cursor-pointer"
 
-                onClick={()=>navigate('/user/login')}>
+                onClick={()=>navigate('/users/login')}>
                   Go to login page
                   <ArrowRight className="w-6 h-6 ml-2" />
               </button>

@@ -159,97 +159,100 @@ function resetIdleTimer(eyes) {
 
         </g>
   
-        <g class="book-1-bottom">
+        <g className="book-1-bottom">
           <polygon 
             points="105,464 105,444 245,464 245,488" 
             fill="#F06292" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
           <polygon 
             points="105,444 180,434 325,457 245,464" 
             fill="#E91E63" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
           <polygon 
             points="245,464 325,457 325,478 245,488" 
             fill="#FFFEF0" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
-          <line x1="310" y1="462" x2="255" y2="468" stroke="#BFBFBF" stroke-width="1"/>
-          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" stroke-width="1"/>
-          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="310" y1="462" x2="255" y2="468" stroke="#BFBFBF" strokeWidth="1"/>
+          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" strokeWidth="1"/>
+          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" strokeWidth="1"/>
           
           <polygon 
             points="120,462 120,452 230,470 230,480" 
             fill="#F8BBD0" 
             stroke="#333" 
-            stroke-width="1"
+            strokeWidth="1"
           />
         </g>
 
-        <g class="book-2-middle" transform="translate(-10, -24)">
+        <g className="book-2-middle" transform="translate(-10, -24)">
           <polygon 
             points="105,464 105,444 245,464 245,488" 
             fill="#FFEB3B" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
           <polygon 
             points="105,444 180,434 325,457 245,464" 
             fill="#FDD835" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
           <polygon 
             points="245,464 325,457 325,478 245,488" 
             fill="#FFFEF0" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
-          <line x1="310" y1="460" x2="255" y2="469" stroke="#BFBFBF" stroke-width="1"/>
-          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" stroke-width="1"/>
-          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="310" y1="460" x2="255" y2="469" stroke="#BFBFBF" strokeWidth="1"/>
+          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" strokeWidth="1"/>
+          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" strokeWidth="1"/>
            <polygon 
             points="120,462 120,452 230,470 230,480" 
             fill="#eada67" 
             stroke="#333" 
-            stroke-width="1"
+            strokeWidth="1"
           />
         </g>
 
-        <g class="book-3-top" transform="translate(5, -48)">
+        <g className="book-3-top" transform="translate(5, -48)">
           <polygon 
             points="105,464 105,444 245,464 245,488" 
             fill="#64B5F6" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
           <polygon 
             points="105,444 180,434 325,457 245,464" 
             fill="#42A5F5" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
           <polygon 
             points="245,464 325,457 325,478 245,488" 
             fill="#FFFEF0" 
             stroke="#333" 
-            stroke-width="1.5" 
+            strokeWidth="1.5"
           />
-          <line x1="310" y1="460" x2="255" y2="469" stroke="#BFBFBF" stroke-width="1"/>
-          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" stroke-width="1"/>
-          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" stroke-width="1"/>
+          <line x1="310" y1="460" x2="255" y2="469" stroke="#BFBFBF" strokeWidth="1"/>
+          <line x1="315" y1="465" x2="255" y2="475" stroke="#BFBFBF" strokeWidth="1"/>
+          <line x1="318" y1="470" x2="255" y2="480" stroke="#BFBFBF" strokeWidth="1"/>
           <polygon 
             points="120,462 120,452 230,470 230,480" 
             fill="#5b9fd6" 
             stroke="#333" 
-            stroke-width="1"
+            strokeWidth="1"
           />
           
           
+        </g>
+        <g>
+          <path d="M 340 450 L 400 450" stroke="#BB897D" strokeWidth="4"  />
         </g>
 
 </svg>

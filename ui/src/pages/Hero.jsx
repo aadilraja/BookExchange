@@ -96,10 +96,10 @@ export default function Hero() {
                             font-roboto font-semibold flex items-center mr-28
                             gap-3 hover:opacity-92 transition-all duration-300  '
                             id='shine-button'
-                            onClick={() => setTimeout(()=>navigate('/users/new'),300)}
+                            onClick={() => setTimeout(()=>navigate('/auth'),300)}
                             >
                 <span className='group-hover:-translate-x-2 transition-transform duration-300 '>Get Started</span> 
-                <ArrowForwardIosIcon className='text-[26px] group-hover:translate-x-2 group-hover:scale-115  transition-all duration-300'/>
+                <ArrowForwardIosIcon className='text-[26px] group-hover:translate-x-2 group-hover:scale-115 transition-all duration-300'/>
           </button>
           </div>
           {/* badges */}

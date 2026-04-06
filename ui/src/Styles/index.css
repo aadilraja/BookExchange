@@ -1,13 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&display=swap');
+
 @import "tailwindcss";
+
+
+
 
 
 @theme {
     --font-caveat: "Caveat", cursive;
     --font-robotoSerif: "Roboto Serif", serif;
     --font-roboto: "Roboto", sans-serif;
+ 
+    
+
     --animate-tada: tada 1s ease-in-out infinite ;
 
 
@@ -35,18 +39,19 @@
 
 
 }
+.font-robotoMono {
+  font-family: "Roboto Mono", monospace;
+}
 
 body {
     background-color: #F1E7DB;
-  
+    /*background-image: url('/src/assets/image.png');*/
+    /*background-size: cover;*/
+    /*background-position:top;*/
+    /*background-repeat: repeat;*/
+
 }
-main
-{
-    background-image: url('/src/assets/image.png');
-    background-size: cover; 
-    background-position:top;
-    background-repeat: repeat;
-}
+
 
 
 body, a, button {
